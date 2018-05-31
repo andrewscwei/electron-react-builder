@@ -11,8 +11,6 @@ $ yarn # or npm install, but yarn is *recommended*
 $ yarn dev
 ```
 
-You're all set.
-
 ## Building the App for Production
 
 ```sh

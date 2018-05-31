@@ -13,7 +13,7 @@ exports.parseDir = function(dir, baseDir = dir) {
   pages.forEach(filename => {
     if ((/(^|\/)\.[^/.]/g).test(filename)) return;
 
-    const basename = path.basename(filename, `.vue`);
+    const basename = path.basename(filename, `.jsx`);
 
     // Ignore files with certain names (i.e. 404.vue). No need to generate a
     // route for these files.

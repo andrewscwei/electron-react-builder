@@ -7,23 +7,26 @@ process.env.BABEL_ENV = `renderer`;
 const merge = require(`webpack-merge`);
 const path = require(`path`);
 const webpack = require(`webpack`);
-const CopyWebpackPlugin = require(`copy-webpack-plugin`);
 const HtmlWebpackPlugin = require(`html-webpack-plugin`);
-const MiniCSSExtractPlugin = require(`mini-css-extract-plugin`);
-const OptimizeCSSPlugin = require(`optimize-css-assets-webpack-plugin`);
 const { dependencies } = require(`../package.json`);
-const { VueLoaderPlugin } = require(`vue-loader`);
 
 module.exports = function(config, paths) {
-  /**
-   * List of node_modules to include in webpack bundle, required for specific
-   * packages like Vue UI libraries that provide pure *.vue files that need
-   * compiling.
-   * @see {@link https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals}
-   */
-  const whitelistedModules = [`vue`, `vue-electron`, `vue-router`, `vue-i18n`, `ip`, `vuex`, `electron-store`, `electron-log`];
+  const whitelistedModules = [
+    `react`,
+    `react-dom`,
+    `react-intl`,
+    `react-redux`,
+    `react-router-config`,
+    `react-router-dom`,
+    `redux`,
+    `redux-thunk`,
+    `prop-types`,
+    `ip`,
+    `electron-store`,
+    `electron-log`
+  ];
+
   const isProduction = process.env.NODE_ENV === `production`;
-  const useSourceMap = isProduction ? config.build.sourceMap : config.dev.sourceMap;
   const baseWebpackConfig = require(`./webpack.base.conf`)(config, paths);
 
   return merge(baseWebpackConfig, {
@@ -32,55 +35,13 @@ module.exports = function(config, paths) {
       ...Object.keys(dependencies || {}).filter(d => !whitelistedModules.includes(d))
     ],
     resolve: {
-      extensions: [`.vue`, `.css`],
-      alias: {
-        ...(config.bundleCompiler ? { vue$: `vue/dist/vue.esm.js` } : {})
-      }
+      extensions: [`.js`, `.jsx`]
     },
     module: {
       rules: [{
-        test: /\.vue$/,
-        loader: `vue-loader`
-      }, {
-        test: /\.(s?css)(\?.*)?$/,
-        oneOf: (function() {
-          function loaders(modules) {
-            return [isProduction ? MiniCSSExtractPlugin.loader : `vue-style-loader`].concat([{
-              loader: `css-loader`,
-              options: {
-                modules: modules,
-                importLoaders: 1,
-                localIdentName: modules ? `[hash:6]` : undefined,
-                minimize: isProduction,
-                sourceMap: useSourceMap
-              }
-            }, {
-              loader: `postcss-loader`,
-              options: {
-                ident: `postcss`,
-                sourceMap: useSourceMap,
-                browsers: [`last 2 versions`, `ie >= 11`],
-                plugins: () => [require(`autoprefixer`)()]
-              }
-            }, {
-              loader: `sass-loader`,
-              options: {
-                indentedSyntax: false,
-                sourceMap: useSourceMap
-              }
-            }]);
-          }
-
-          return [{
-            resourceQuery: /module/,
-            use: loaders(true)
-          }, {
-            use: loaders(false)
-          }];
-        })()
-      }, {
-        test: /\.html$/,
-        use: `vue-html-loader`
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: `babel-loader`
       }, {
         test: /\.(jpe?g|png|gif|svg|ico)(\?.*)?$/,
         use: `url-loader?limit=10000&name=images/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`
@@ -93,9 +54,6 @@ module.exports = function(config, paths) {
       }]
     },
     plugins: [
-      new VueLoaderPlugin(),
-      new OptimizeCSSPlugin({ cssProcessorOptions: { safe: true } }),
-      new MiniCSSExtractPlugin({ filename: `styles.css` }),
       new HtmlWebpackPlugin({
         filename: `index.html`,
         template: path.resolve(paths.input, `renderer`, `index.html`),
@@ -106,13 +64,7 @@ module.exports = function(config, paths) {
         }
       })
     ]
-      .concat(isProduction ? [
-        new CopyWebpackPlugin([{
-          from: path.join(paths.base, `static`),
-          to: path.join(paths.output, `electron/static`),
-          ignore: [`.*`]
-        }])
-      ] : [
+      .concat(isProduction ? [] : [
         new webpack.HotModuleReplacementPlugin()
       ])
   });

@@ -8,7 +8,7 @@ Install project dependences and launch a dev instance locally.
 
 ```sh
 $ yarn # or npm install, but yarn is *recommended*
-$ yarn dev
+$ npm run dev
 ```
 
 ## Building the App for Production
@@ -43,7 +43,3 @@ By default, logs are written to the following locations:
 
 - on OS X: `~/Library/Logs/<app name>/log.log`
 - on Windows: `%USERPROFILE%\AppData\Roaming\<app name>\log.log`
-
-## License
-
-© BAM Communications

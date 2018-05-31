@@ -21,7 +21,7 @@
     "patch": "erb patch"
   },
   "build": {
-    "appId": "ca.bamcommunications.{{ slugify name }}",
+    "appId": "{{ slugify name }}",
     "directories": {
       "output": "build"
     },

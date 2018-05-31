@@ -31,7 +31,7 @@ Follow these steps to quickly set up a project built with `electron-react-builde
     3. **Projects** > **Add Project** > Find the GitHub repo for your project > **Setup project** > **Start building**
     4. In your project settings > **Checkout SSH keys** > **Add user key**
     5. In your project settings > **Environment Variables** > Create the following variables:
-        1. `GH_TOKEN`: [@bamcombot](https://github.com/bamcombot)'s GitHub access token (for permission to create releases in a private repo)
+        1. `GH_TOKEN`: GitHub access token (for permission to create releases in a private repo)
         2. `WIN_CSC_LINK`: Windows code sign certificate `base64` string
         3. `WIN_CSC_KEY_PASSWORD`: Password to unlock `WIN_CSC_LINK`
 3. Trigger rebuild on CircleCI (your first build probably failed). Once complete, your app create a drafted release in its repo. Note that it is still a draft. Edit it to make it an official release.

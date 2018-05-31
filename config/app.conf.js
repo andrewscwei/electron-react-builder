@@ -26,10 +26,7 @@ module.exports = {
   // Config for the `build` task.
   build: {
     // Specifies whether JS and CSS sourcemaps are enabled.
-    sourceMap: false,
-
-    // Specifies whether the linter should run.
-    linter: true
+    sourceMap: false
   },
 
   // Config for the `dev` task.
@@ -37,11 +34,8 @@ module.exports = {
     // Specifies whether JS and CSS sourcemaps are enabled.
     sourceMap: true,
 
-    // Specifies whether the linter should run.
-    linter: false,
-
     // Port for dev server.
-    port: 9080,
+    port: 8080,
 
     // Specifies whether the main process should reload every time a change is
     // made in the main process.

@@ -8,7 +8,7 @@ const merge = require(`webpack-merge`);
 const path = require(`path`);
 const program = require(`commander`);
 const spawn = require(`./utils/spawn`);
-const version = require(`./package.json`).version;
+const { version } = require(`./package.json`);
 
 // Root path of the project.
 let baseDir = process.cwd();
@@ -35,7 +35,7 @@ let shouldPublish = false;
 let platform = undefined;
 
 // Target release tag.
-let releaseTag = `7.3.0`;
+let releaseTag = `1.0.0`;
 
 // Resolve CLI command and options.
 function resolveOptions(cmd, options) {

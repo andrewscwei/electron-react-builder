@@ -16,6 +16,7 @@ module.exports = async function(config, paths) {
   const rootFilesToPatch = [
     `jsconfig.json`,
     `.eslintrc`,
+    `.stylelintrc`,
     `.editorconfig`,
     `.nvmrc`
   ];

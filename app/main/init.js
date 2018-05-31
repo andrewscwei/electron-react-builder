@@ -161,12 +161,12 @@ export default function init(readyCallback) {
       autoUpdater.quitAndInstall();
     });
 
-    // Install `vue-devtools` in development.
+    // Install devtools in development.
     if (process.env.NODE_ENV === `development`) {
       let installExtension = require(`electron-devtools-installer`);
-      installExtension.default(installExtension.VUEJS_DEVTOOLS)
+      installExtension.default(installExtension.REACT_DEVELOPER_TOOLS)
         .then(name => log.info(`Added DevTools extension: ${name}`))
-        .catch(err => log.error(`An error occured while installing vue-devtools:`, err));
+        .catch(err => log.error(`An error occured while installing devtools:`, err));
     }
 
     win.webContents.on(`did-finish-load`, () => {

@@ -34,14 +34,13 @@ module.exports = {
     author: {
       type: `string`,
       required: false,
-      message: `Author`,
-      default: `BAM Communications, Inc.`
+      message: `Author`
     }
   },
   skipInterpolation: [`.*`, `.*/**`],
   complete(data) {
     const destDir = path.join(process.cwd(), data.destDirName);
-    const filesToCopy = [`jsconfig.json`, `.editorconfig`, `.eslintrc`, `.nvmrc`, `.gitignore`, `config/app.conf.js`];
+    const filesToCopy = [`jsconfig.json`, `.editorconfig`, `.eslintrc`, `.stylelintrc`, `.nvmrc`, `.gitignore`, `config/app.conf.js`];
 
     filesToCopy.forEach(file => {
       fs.copyFileSync(path.join(__dirname, file), path.join(destDir, file));

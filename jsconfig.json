@@ -9,10 +9,8 @@
       ],
     }
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-    "public"
+  "include": [
+    "src/main/*",
+    "src/renderer/*"
   ]
 }

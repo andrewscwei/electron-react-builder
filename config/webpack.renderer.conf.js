@@ -34,15 +34,8 @@ module.exports = function(config, paths) {
     externals: [
       ...Object.keys(dependencies || {}).filter(d => !whitelistedModules.includes(d))
     ],
-    resolve: {
-      extensions: [`.js`, `.jsx`]
-    },
     module: {
       rules: [{
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: `babel-loader`
-      }, {
         test: /\.(jpe?g|png|gif|svg|ico)(\?.*)?$/,
         use: `url-loader?limit=10000&name=images/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`
       }, {

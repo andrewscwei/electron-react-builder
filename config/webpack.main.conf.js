@@ -10,7 +10,10 @@ const CopyWebpackPlugin = require(`copy-webpack-plugin`);
 const { dependencies } = require(`../package.json`);
 
 module.exports = function(config, paths) {
-  const whitelistedModules = [`electron-log`, `electron-updater`];
+  const whitelistedModules = [
+    `electron-log`,
+    `electron-updater`
+  ];
   const isProduction = process.env.NODE_ENV === `production`;
   const baseWebpackConfig = require(`./webpack.base.conf`)(config, paths);
 

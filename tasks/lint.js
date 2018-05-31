@@ -15,12 +15,12 @@ module.exports = async function(config, paths, shouldLintFix) {
   let args = [
     `-f`, path.resolve(paths.base, `node_modules/eslint-friendly-formatter`),
     `--ext`, `.js,.vue`,
-    `--ignore-path`, `${path.join(paths.base, `.gitignore`)}`
+    `--ignore-path`, `${path.join(paths.base, `.gitignore`)}`,
   ];
 
   if (shouldLintFix) args.push(`--fix`);
   args.push(paths.input);
 
-  await spawn(command, args, { stdio: `inherit` });
+  await spawn(command, args, { stdio: `inherit`, });
   log.succeed(`Linter completed successfully`);
 };

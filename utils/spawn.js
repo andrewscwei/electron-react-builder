@@ -2,7 +2,7 @@
  * @file Simple promisified spawn wrapper.
  */
 
-const { spawn } = require(`child_process`);
+const { spawn, } = require(`child_process`);
 
 module.exports = function() {
   return new Promise((resolve, reject) => {

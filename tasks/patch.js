@@ -10,7 +10,7 @@ const path = require(`path`);
 
 module.exports = async function(config, paths) {
   const templateFilesToPatch = [
-    `.circleci/config.yml`
+    `.circleci/config.yml`,
   ];
 
   const rootFilesToPatch = [
@@ -18,7 +18,7 @@ module.exports = async function(config, paths) {
     `.eslintrc`,
     `.stylelintrc`,
     `.editorconfig`,
-    `.nvmrc`
+    `.nvmrc`,
   ];
 
   log.info(`Patching files: ${templateFilesToPatch.map(val => (chalk.cyan(val))).join(`, `)}, ${rootFilesToPatch.map(val => (chalk.cyan(val))).join(`, `)}...`);

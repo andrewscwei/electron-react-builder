@@ -17,7 +17,7 @@ module.exports = async function(config, paths, platform, shouldPublish = false) 
   case `mac`:
     log.info(`Packaging for Mac...`);
     try {
-      await builder.build({ targets: Platform.MAC.createTarget(), publish: shouldPublish ? `always` : `never` });
+      await builder.build({ targets: Platform.MAC.createTarget(), publish: shouldPublish ? `always` : `never`, });
       log.succeed(`Successfully packaged for Mac`);
     }
     catch (err) {
@@ -47,8 +47,8 @@ module.exports = async function(config, paths, platform, shouldPublish = false) 
           `-e`, `WIN_CSC_KEY_PASSWORD=${process.env.WIN_CSC_KEY_PASSWORD}`,
           `--workdir`, `/app`,
           BUILDER_IMAGE_WIN,
-          `/bin/bash`, `-c`, `/app/node_modules/.bin/electron-builder --win -p ${shouldPublish ? `always` : `never`}`
-        ], { stdio: `inherit` });
+          `/bin/bash`, `-c`, `/app/node_modules/.bin/electron-builder --win -p ${shouldPublish ? `always` : `never`}`,
+        ], { stdio: `inherit`, });
         log.succeed(`Successfully packaged for Windows`);
       }
       catch (err) {
@@ -59,7 +59,7 @@ module.exports = async function(config, paths, platform, shouldPublish = false) 
     }
     else {
       try {
-        await builder.build({ targets: Platform.WINDOWS.createTarget(), publish: shouldPublish ? `always` : `never`  });
+        await builder.build({ targets: Platform.WINDOWS.createTarget(), publish: shouldPublish ? `always` : `never`,  });
         log.succeed(`Successfully packaged for Windows`);
       }
       catch (err) {

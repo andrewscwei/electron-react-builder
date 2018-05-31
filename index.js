@@ -8,7 +8,7 @@ const merge = require(`webpack-merge`);
 const path = require(`path`);
 const program = require(`commander`);
 const spawn = require(`./utils/spawn`);
-const { version } = require(`./package.json`);
+const { version, } = require(`./package.json`);
 
 // Root path of the project.
 let baseDir = process.cwd();
@@ -72,11 +72,11 @@ async function main() {
     input: path.resolve(baseDir, inputDir),
     output: path.resolve(baseDir, outputDir),
     build: path.resolve(baseDir, require(path.join(baseDir, `package.json`)).build.directories.output),
-    static: path.resolve(baseDir, `static`)
+    static: path.resolve(baseDir, `static`),
   };
 
   // Catch unsupported commands.
-  const supportedCommands = [`clean`, `build`, `pack`, `dev`, `lint`, `patch`, `upgrade`, ``];
+  const supportedCommands = [`clean`, `build`, `pack`, `dev`, `lint`, `patch`, `upgrade`, ``, ];
 
   if (!~supportedCommands.indexOf(command)) {
     log.error(`Unrecognized command ${chalk.cyan(command)}. Try ${chalk.cyan(`electron-react-builder --help`)}`);
@@ -141,12 +141,12 @@ async function main() {
   case `upgrade`:
     // Use Yarn if `yarn.lock` file exists.
     if (fs.existsSync(path.resolve(paths.base, `yarn.lock`))) {
-      await spawn(`yarn`, [`remove`, `electron-react-builder`], { stdio: `inherit` });
-      await spawn(`yarn`, [`add`, `git+ssh://git@github.com/andrewscwei/electron-react-builder.git#${releaseTag}`, `--dev`], { stdio: `inherit` });
+      await spawn(`yarn`, [`remove`, `electron-react-builder`, ], { stdio: `inherit`, });
+      await spawn(`yarn`, [`add`, `git+ssh://git@github.com/andrewscwei/electron-react-builder.git#${releaseTag}`, `--dev`, ], { stdio: `inherit`, });
     }
     else {
-      await spawn(`npm`, [`uninstall`, `electron-react-builder`], { stdio: `inherit` });
-      await spawn(`npm`, [`install`, `git+ssh://git@github.com/andrewscwei/electron-react-builder.git#${releaseTag}`, `--save-dev`], { stdio: `inherit` });
+      await spawn(`npm`, [`uninstall`, `electron-react-builder`, ], { stdio: `inherit`, });
+      await spawn(`npm`, [`install`, `git+ssh://git@github.com/andrewscwei/electron-react-builder.git#${releaseTag}`, `--save-dev`, ], { stdio: `inherit`, });
     }
 
     // Patch files when done.

@@ -17,7 +17,7 @@ exports.parseDir = function(dir, baseDir = dir) {
 
     // Ignore files with certain names (i.e. 404.vue). No need to generate a
     // route for these files.
-    if (~[`404`].indexOf(basename)) return;
+    if (~[`404`, ].indexOf(basename)) return;
 
     // Check if directory. If it is, crawl its contents to determine sub-routes.
     if (basename === filename) return out = out.concat(exports.parseDir(path.join(dir, basename), baseDir));
@@ -32,14 +32,14 @@ exports.parseDir = function(dir, baseDir = dir) {
         const out = _.kebabCase(v);
 
         // Treat certain keywords as page index.
-        return ~[`index`, `home`, `landing`].indexOf(out) && (i === tmp.length - 1) ? `` : out;
+        return ~[`index`, `home`, `landing`, ].indexOf(out) && (i === tmp.length - 1) ? `` : out;
       })
       .join(`/`);
 
     out.push({
       path: `/${url}`,
       component: `${path.join(dir, filename).replace(baseDir, ``)}`.split(`/`).filter(v => v)
-        .join(`/`)
+        .join(`/`),
     });
   });
 
@@ -85,7 +85,7 @@ exports.generate = function(config, paths) {
   if (fs.existsSync(path.resolve(paths.input, `renderer`, `pages`, `404.vue`))) {
     routes.push({
       path: `*`,
-      component: `404.vue`
+      component: `404.vue`,
     });
   }
 

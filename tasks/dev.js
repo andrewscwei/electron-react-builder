@@ -35,12 +35,12 @@ module.exports = async function(config, paths) {
           }
 
           if (stats.hasErrors()) {
-            console.error(stats.toString({ chunks: false, colors: true }));
+            console.error(stats.toString({ chunks: false, colors: true, }));
             log.fail(`Failed to build main process`);
             return;
           }
 
-          console.log(stats.toString({ chunks: false, colors: true }));
+          console.log(stats.toString({ chunks: false, colors: true, }));
           log.succeed(`Successfully built main process`);
           electron.restart();
           resolve();
@@ -55,12 +55,12 @@ module.exports = async function(config, paths) {
           }
 
           if (stats.hasErrors()) {
-            console.error(stats.toString({ chunks: false, colors: true }));
+            console.error(stats.toString({ chunks: false, colors: true, }));
             log.fail(`Failed to build main process`);
             return;
           }
 
-          console.log(stats.toString({ chunks: false, colors: true }));
+          console.log(stats.toString({ chunks: false, colors: true, }));
           log.succeed(`Successfully built main process`);
           resolve();
         });
@@ -74,24 +74,24 @@ module.exports = async function(config, paths) {
 
       const compiler = webpack(merge(rendererConfig, {
         entry: {
-          renderer: [path.join(__dirname, `dev-client`)].concat(rendererConfig.entry.renderer)
-        }
+          renderer: [path.join(__dirname, `dev-client`), ].concat(rendererConfig.entry.renderer),
+        },
       }));
 
       hotMiddleware = WebpackHotMiddleware(compiler, {
         log: false,
-        heartbeat: 2000
+        heartbeat: 2000,
       });
 
       // Force page reload when html-webpack-plugin template changes.
       compiler.plugin(`compilation`, (compilation) => {
         compilation.plugin(`html-webpack-plugin-after-emit`, function(data) {
-          hotMiddleware.publish({ action: `reload` });
+          hotMiddleware.publish({ action: `reload`, });
         });
       });
 
       compiler.plugin(`done`, (stats) => {
-        console.log(stats.toString({ chunks: false, colors: true }));
+        console.log(stats.toString({ chunks: false, colors: true, }));
         log.succeed(`Successfully built renderer process`);
       });
 
@@ -103,7 +103,7 @@ module.exports = async function(config, paths) {
           ctx.middleware.waitUntilValid(function() {
             resolve();
           });
-        }
+        },
       });
 
       server.listen(port);

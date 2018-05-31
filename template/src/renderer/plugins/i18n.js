@@ -28,7 +28,7 @@ locales.keys().forEach(path => {
 const i18n = new VueI18n({
   locale: `en`,
   fallbackLocale: `en`,
-  messages
+  messages,
 });
 
 // Define `$locale` property so it can be accessed in templates.
@@ -38,7 +38,7 @@ Vue.prototype.$locale = {
   },
   current: function() {
     return i18n.locale;
-  }
+  },
 };
 
 export default i18n;

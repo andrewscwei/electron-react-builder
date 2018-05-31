@@ -8,7 +8,7 @@ const merge = require(`webpack-merge`);
 const path = require(`path`);
 const webpack = require(`webpack`);
 const HtmlWebpackPlugin = require(`html-webpack-plugin`);
-const { dependencies } = require(`../package.json`);
+const { dependencies, } = require(`../package.json`);
 
 module.exports = function(config, paths) {
   const whitelistedModules = [
@@ -27,7 +27,7 @@ module.exports = function(config, paths) {
     `prop-types`,
     `ip`,
     `electron-store`,
-    `electron-log`
+    `electron-log`,
   ];
 
   const isProduction = process.env.NODE_ENV === `production`;
@@ -36,19 +36,19 @@ module.exports = function(config, paths) {
   return merge(baseWebpackConfig, {
     mode: isProduction ? `production` : `development`,
     externals: [
-      ...Object.keys(dependencies || {}).filter(d => !whitelistedModules.includes(d))
+      ...Object.keys(dependencies || {}).filter(d => !whitelistedModules.includes(d)),
     ],
     module: {
       rules: [{
         test: /\.(jpe?g|png|gif|svg|ico)(\?.*)?$/,
-        use: `url-loader?limit=10000&name=images/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`
+        use: `url-loader?limit=10000&name=images/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`,
       }, {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        use: `url-loader?limit=10000&name=media/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`
+        use: `url-loader?limit=10000&name=media/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`,
       }, {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        use: `url-loader?limit=10000&name=fonts/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`
-      }]
+        use: `url-loader?limit=10000&name=fonts/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`,
+      }, ],
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -57,12 +57,12 @@ module.exports = function(config, paths) {
         minify: {
           collapseWhitespace: true,
           removeAttributeQuotes: true,
-          removeComments: true
-        }
-      })
+          removeComments: true,
+        },
+      }),
     ]
       .concat(isProduction ? [] : [
-        new webpack.HotModuleReplacementPlugin()
-      ])
+        new webpack.HotModuleReplacementPlugin(),
+      ]),
   });
 };

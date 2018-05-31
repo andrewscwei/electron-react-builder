@@ -5,7 +5,7 @@ import store from '@/store';
 import App from '@/App';
 import Vue from 'vue';
 import VueElectron from 'vue-electron';
-import { webFrame } from 'electron';
+import { webFrame, } from 'electron';
 
 log.info(`RENDERER`, `Process started`);
 
@@ -19,5 +19,5 @@ new Vue({
   store,
   i18n,
   router,
-  render: h => h(App)
+  render: h => h(App),
 });

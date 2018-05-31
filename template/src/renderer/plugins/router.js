@@ -31,8 +31,8 @@ const router = new VueRouter({
   })
     .concat([{
       path: `*`,
-      redirect: `/`
-    }])
+      redirect: `/`,
+    }, ]),
 });
 
 router.beforeEach((to, from, next) => {

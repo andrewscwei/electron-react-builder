@@ -10,7 +10,7 @@ module.exports = async function(config, paths) {
   log.info(`Cleaning ${chalk.cyan(paths.build)} and ${chalk.cyan(paths.output)}...`);
   
   try {
-    await del([paths.build, paths.output]);
+    await del([paths.build, paths.output, ]);
     log.succeed(`Clean complete`);
   }
   catch (err) {

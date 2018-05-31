@@ -19,7 +19,7 @@ else {
   log.transports.file.level = `silly`;
 }
 
-export { log as logger };
+export { log as logger, };
 
 export default {
   error: log.error,
@@ -38,5 +38,5 @@ export default {
   },
   isEnabled: function() {
     return log.transports.rendererConsole.level !== false;
-  }
+  },
 };

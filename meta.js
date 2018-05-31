@@ -12,35 +12,35 @@ module.exports = {
         .replace(/--+/g, `-`)
         .replace(/^-+/, ``)
         .replace(/-+$/, ``);
-    }
+    },
   },
   prompts: {
     name: {
       type: `string`,
       required: true,
-      message: `Project name`
+      message: `Project name`,
     },
     repository: {
       type: `string`,
       required: false,
-      message: `URL to Git repository for auto-publisher (enter to skip)`
+      message: `URL to Git repository for auto-publisher (enter to skip)`,
     },
     description: {
       type: `string`,
       required: false,
       message: `Project description`,
-      default: `An electron-react-builder project`
+      default: `An electron-react-builder project`,
     },
     author: {
       type: `string`,
       required: false,
-      message: `Author`
-    }
+      message: `Author`,
+    },
   },
-  skipInterpolation: [`.*`, `.*/**`],
+  skipInterpolation: [`.*`, `.*/**`, ],
   complete(data) {
     const destDir = path.join(process.cwd(), data.destDirName);
-    const filesToCopy = [`jsconfig.json`, `.editorconfig`, `.eslintrc`, `.stylelintrc`, `.nvmrc`, `.gitignore`, `config/app.conf.js`];
+    const filesToCopy = [`jsconfig.json`, `.editorconfig`, `.eslintrc`, `.stylelintrc`, `.nvmrc`, `.gitignore`, `config/app.conf.js`, ];
 
     filesToCopy.forEach(file => {
       fs.copyFileSync(path.join(__dirname, file), path.join(destDir, file));
@@ -51,5 +51,5 @@ module.exports = {
     console.log(`  nvm use`);
     console.log(`  yarn`);
     console.log(`  yarn dev\n`);
-  }
+  },
 };

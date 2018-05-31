@@ -27,31 +27,31 @@ module.exports = function(config, paths) {
     devtool: isProduction && (useSourceMaps ? `source-map` : false) || `#cheap-module-eval-source-map`,
     node: {
       __dirname: !isProduction,
-      __filename: !isProduction
+      __filename: !isProduction,
     },
     entry: {
-      [process.env.BABEL_ENV]: path.join(paths.input, `${process.env.BABEL_ENV}/index.js`)
+      [process.env.BABEL_ENV]: path.join(paths.input, `${process.env.BABEL_ENV}/index.js`),
     },
     output: {
       filename: `[name].js`,
       libraryTarget: `commonjs2`,
-      path: path.join(paths.output, `electron`)
+      path: path.join(paths.output, `electron`),
     },
     resolve: {
-      extensions: [`.js`, `.jsx`, `.json`, `.node`],
+      extensions: [`.js`, `.jsx`, `.json`, `.node`, ],
       alias: {
         '@': path.join(paths.input, process.env.BABEL_ENV),
       },
       modules: [
         path.resolve(paths.base, `node_modules`),
         path.resolve(__dirname, `../node_modules`),
-        path.resolve(paths.input, process.env.BABEL_ENV)
-      ]
+        path.resolve(paths.input, process.env.BABEL_ENV),
+      ],
     },
     module: {
       rules: [{
         test: /\.node$/,
-        use: `node-loader`
+        use: `node-loader`,
       }, {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -62,17 +62,17 @@ module.exports = function(config, paths) {
             retainLines: true,
             presets: [
               `env`,
-              `react`
+              `react`,
             ],
             plugins: [
               `transform-object-rest-spread`,
               `transform-runtime`,
               `transform-decorators-legacy`,
-              `transform-class-properties`
-            ]
-          }
-        }
-      }]
+              `transform-class-properties`,
+            ],
+          },
+        },
+      }, ],
     },
     plugins: [
       new webpack.DefinePlugin({
@@ -80,11 +80,11 @@ module.exports = function(config, paths) {
         '$routes': JSON.stringify(routes),
         '$locales': JSON.stringify(locales),
         'process.env': _({
-          NODE_ENV: `"${process.env.NODE_ENV}"`
+          NODE_ENV: `"${process.env.NODE_ENV}"`,
         })
           .assign(config.env && _.mapValues(config.env, (val) => JSON.stringify(val)))
-          .value()
-      })
-    ]
+          .value(),
+      }),
+    ],
   };
 };

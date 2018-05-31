@@ -26,7 +26,7 @@ module.exports = {
   // Config for the `build` task.
   build: {
     // Specifies whether JS and CSS sourcemaps are enabled.
-    sourceMap: false
+    sourceMap: false,
   },
 
   // Config for the `dev` task.
@@ -39,6 +39,6 @@ module.exports = {
 
     // Specifies whether the main process should reload every time a change is
     // made in the main process.
-    reloadMainProcess: true
-  }
+    reloadMainProcess: true,
+  },
 };

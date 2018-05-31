@@ -4,9 +4,9 @@
  * @file Base initialization script for the Electron main process.
  */
 
-import { app, BrowserWindow, ipcMain } from 'electron';
-import log, { logger } from '../utils/log';
-import { autoUpdater } from 'electron-updater';
+import { app, BrowserWindow, ipcMain, } from 'electron';
+import log, { logger, } from '../utils/log';
+import { autoUpdater, } from 'electron-updater';
 
 // Set up auto-updater logger.
 autoUpdater.logger = logger;
@@ -24,7 +24,7 @@ const UPDATE_STATUS = {
   NOT_AVAILABLE: 3,
   DOWNLOADING: 4,
   DOWNLOADED: 5,
-  ERROR: 6
+  ERROR: 6,
 };
 
 // Main browser window.
@@ -46,7 +46,7 @@ function createWindow() {
     fullscreen: process.env.NODE_ENV === `production`,
     // Option to set the x and y position of the window in environment variables.
     x: Number(process.env.WINDOW_X) || Number(process.env.WINDOW_Y) || 0,
-    y: Number(process.env.WINDOW_Y) || Number(process.env.WINDOW_X) || 0
+    y: Number(process.env.WINDOW_Y) || Number(process.env.WINDOW_X) || 0,
   }, $config.window || {}));
 
   // Load the WWW files.
@@ -73,7 +73,7 @@ function checkForUpdates() {
   if (win === undefined) return;
 
   if (hasUpdate) {
-    win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED });
+    win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED, });
     clearInterval(updateInterval);
     updateInterval = undefined;
   }
@@ -93,28 +93,28 @@ export default function init(readyCallback) {
 
     // Susbscribe to autoUpdater events.
     autoUpdater.on(`checking-for-update`, () => {
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.CHECKING });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.CHECKING, });
     });
 
     autoUpdater.on(`update-available`, () => {
       log.info(`New update found`);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.AVAILABLE });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.AVAILABLE, });
     });
 
     autoUpdater.on(`update-not-available`, () => {
       log.info(`No update found`);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.NOT_AVAILABLE });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.NOT_AVAILABLE, });
     });
 
     autoUpdater.on(`error`, (err) => {
       log.error(`Error fetching update`, err);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.ERROR, error: err ? (err.stack || err).toString() : `Error: Unknown` });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.ERROR, error: err ? (err.stack || err).toString() : `Error: Unknown`, });
     });
 
     autoUpdater.on(`download-progress`, (progress) => {
       log.info(`Downlownding update...`, progress);
 
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADING, progress: progress });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADING, progress: progress, });
 
       if (updateInterval) {
         clearInterval(updateInterval);
@@ -125,7 +125,7 @@ export default function init(readyCallback) {
     autoUpdater.on(`update-downloaded`, () => {
       log.info(`New update downloaded`);
 
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED, });
       hasUpdate = true;
     });
 

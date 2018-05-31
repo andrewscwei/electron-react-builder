@@ -48,6 +48,6 @@
     }
   },
   "devDependencies": {
-    "electron-react-builder": "git+ssh://git@github.com/BAMCOM/electron-react-builder.git#v1.0.0"
+    "electron-react-builder": "git+ssh://git@github.com/andrewscwei/electron-react-builder.git#v1.0.0"
   }
 }

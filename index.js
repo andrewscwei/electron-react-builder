@@ -142,11 +142,11 @@ async function main() {
     // Use Yarn if `yarn.lock` file exists.
     if (fs.existsSync(path.resolve(paths.base, `yarn.lock`))) {
       await spawn(`yarn`, [`remove`, `electron-react-builder`], { stdio: `inherit` });
-      await spawn(`yarn`, [`add`, `git+ssh://git@github.com/BAMCOM/electron-react-builder.git#${releaseTag}`, `--dev`], { stdio: `inherit` });
+      await spawn(`yarn`, [`add`, `git+ssh://git@github.com/andrewscwei/electron-react-builder.git#${releaseTag}`, `--dev`], { stdio: `inherit` });
     }
     else {
       await spawn(`npm`, [`uninstall`, `electron-react-builder`], { stdio: `inherit` });
-      await spawn(`npm`, [`install`, `git+ssh://git@github.com/BAMCOM/electron-react-builder.git#${releaseTag}`, `--save-dev`], { stdio: `inherit` });
+      await spawn(`npm`, [`install`, `git+ssh://git@github.com/andrewscwei/electron-react-builder.git#${releaseTag}`, `--save-dev`], { stdio: `inherit` });
     }
 
     // Patch files when done.

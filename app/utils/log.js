@@ -19,7 +19,7 @@ else {
   log.transports.file.level = `silly`;
 }
 
-export { log as logger, };
+export { log as logger };
 
 export default {
   error: log.error,

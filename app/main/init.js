@@ -4,9 +4,9 @@
  * @file Base initialization script for the Electron main process.
  */
 
-import { app, BrowserWindow, ipcMain, } from 'electron';
-import log, { logger, } from '../utils/log';
-import { autoUpdater, } from 'electron-updater';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import log, { logger } from '../utils/log';
+import { autoUpdater } from 'electron-updater';
 
 // Set up auto-updater logger.
 autoUpdater.logger = logger;

@@ -1,0 +1,53 @@
+{
+  "version": "0.1.0",
+  "name": "{{ slugify name }}",
+  "description": "{{ description }}",
+  "main": "./dist/electron/main.js",
+  "author": "{{ author }}",
+  "repository": "{{ repository }}",
+  "private": true,
+  "license": "NOLICENSE",
+  "scripts": {
+    "clean": "erb clean",
+    "build": "erb build",
+    "build:mac": "erb build -m",
+    "build:win": "erb build -w",
+    "publish:mac": "erb build -m -p",
+    "publish:win": "erb build -w -p",
+    "dev": "erb dev",
+    "lint": "erb lint",
+    "lint:fix": "erb lint -f",
+    "upgrade": "erb upgrade",
+    "patch": "erb patch"
+  },
+  "build": {
+    "appId": "ca.bamcommunications.{{ slugify name }}",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "dist/electron",
+      "node_modules/",
+      "package.json"
+    ],
+    "publish": [{
+      "provider": "generic",
+      "url": "https://{{ slugify name }}-nuts.herokuapp.com/download/latest"
+    }, {
+      "provider": "github",
+      "private": true
+    }],
+    "mac": {
+      "target": "zip",
+      "icon": "build/icons/icon.icns"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icons/icon.ico",
+      "verifyUpdateCodeSignature": false
+    }
+  },
+  "devDependencies": {
+    "electron-react-builder": "git+ssh://git@github.com/BAMCOM/electron-react-builder.git#v1.0.0"
+  }
+}

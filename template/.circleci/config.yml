@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/app
+    docker:
+      - image: electronuserland/builder:wine
+    steps:
+      - checkout
+      - run:
+          name: Install Node
+          command: |
+            set +e
+            touch $BASH_ENV
+            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+            echo "nvm install $(cat ~/app/.nvmrc)" >> $BASH_ENV
+            echo "nvm alias default $(cat ~/app/.nvmrc)" >> $BASH_ENV
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install NPM dependencies
+          command: |
+            if [ ! -f yarn.lock ]; then
+              npm install
+            else
+              yarn install
+            fi
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - "node_modules"
+      - run:
+          name: Build
+          command: npm run build
+      - deploy:
+          name: Draft release
+          command: ./node_modules/.bin/electron-react-builder pack --${BUILD_TARGET:-win} -p
+      - store_artifacts:
+          path: ~/app/build

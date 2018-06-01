@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-export class Settings extends PureComponent {
+export default class Settings extends PureComponent {
   render() {
     return (
       <div>

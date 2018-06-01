@@ -13,7 +13,7 @@ export default class App extends PureComponent {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        { renderRoutes(this.props.route.routes) }
+        {renderRoutes(this.props.route.routes)}
       </ThemeProvider>
     );
   }

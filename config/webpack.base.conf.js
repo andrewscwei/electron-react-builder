@@ -54,7 +54,11 @@ module.exports = function(config, paths) {
         use: `node-loader`,
       }, {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        include: [
+          path.resolve(paths.base, `config`),
+          path.resolve(paths.base, `src`),
+          path.resolve(paths.base, `node_modules/electron-react-builder`),
+        ],
         use: {
           loader: `babel-loader`,
           options: {

@@ -178,7 +178,9 @@ const QuitButton = styled.button`
 `;
 
 export default class Admin extends PureComponent {
-  constructor() {
+  constructor(props) {
+    super(props);
+
     this.state = {
       activationTimeout: null,
       idleTimeout: null,
@@ -375,7 +377,7 @@ export default class Admin extends PureComponent {
   }
 
   render() {
-    const { appStatus, appVersion, appName, ipAddress } = this.state;
+    const { appStatus, appVersion, debugEnabled, updateReady, appName, ipAddress } = this.state;
 
     return (
       <Root>

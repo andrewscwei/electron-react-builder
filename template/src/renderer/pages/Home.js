@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { FormattedHTMLMessage } from 'react-intl';
+import open from 'open';
 
 const StyledLogo = styled(Logo)`
   margin-bottom: 50px;
@@ -34,6 +35,27 @@ const Root = styled.div`
         margin-right: 10px;
       }
     }
+
+    a, button {
+      align-items: center;
+      background: ${props => props.theme.buttonColor};
+      color: ${props => props.theme.buttonTextColor};
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      font-family: ${props => props.theme.font};
+      font-size: .7em;
+      font-weight: 600;
+      height: 50px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: opacity .2s ease-out;
+      width: 150px;
+
+      :hover {
+        opacity: .6;
+      }
+    }
   }
 
   h1 {
@@ -55,30 +77,14 @@ const Root = styled.div`
     font-size: 1em;
     text-align: center;
 
-    em {
+    a {
       color: ${props => props.theme.accentColor};
       font-weight: 600;
-    }
-  }
+      transition: opacity .2s ease-out;
 
-  a, button {
-    align-items: center;
-    background: ${props => props.theme.buttonColor};
-    color: ${props => props.theme.buttonTextColor};
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    font-family: ${props => props.theme.font};
-    font-size: .7em;
-    font-weight: 600;
-    height: 50px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: opacity .2s ease-out;
-    width: 150px;
-
-    :hover {
-      opacity: .6;
+      &:hover {
+        opacity: .6;
+      }
     }
   }
 `;
@@ -97,8 +103,15 @@ export default class Home extends PureComponent {
     incrementTwice: PropTypes.func.isRequired,
   }
 
-  static defaultProps = {
-    t: {},
+  componentDidMount() {
+    if (!this.rootNode) return;
+
+    this.rootNode.querySelectorAll(`[href]`).forEach(el => {
+      el.addEventListener(`click`, e => {
+        e.preventDefault();
+        open(e.target.getAttribute(`href`));
+      });
+    });
   }
 
   toggleLocale = () => {
@@ -114,7 +127,7 @@ export default class Home extends PureComponent {
     const { t, count, incrementOnce, incrementTwice } = this.props;
 
     return (
-      <Root>
+      <Root innerRef={el => this.rootNode = el}>
         <StyledLogo/>
         <summary>
           <h1>

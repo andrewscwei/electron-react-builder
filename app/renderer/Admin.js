@@ -17,13 +17,13 @@ import Settings from '@/Settings';
 import { ipcRenderer, remote } from 'electron';
 import ip from 'ip';
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+import styled, { injectGlobal } from 'styled-components';
 
 // Timeout in between click intervals when activating the admin panel, in ms.
 const ACTIVATION_TIMEOUT_INTERVAL = 500;
 
-// Number of times to click on the top left corner of the screen to activate
-// the admin panel.
+// Number of times to click on the top left corner of the screen to activate the
+// admin panel.
 const MAX_ACTIVATION_COUNT = 5;
 
 // Updater status enums.
@@ -54,14 +54,10 @@ const Root = styled.div`
   overflow: hidden;
   position: fixed;
   top: 0;
-  transform: translate3d(-100%, 0, 0);
+  transform: ${props => props.active ? `translate3d(0, 0, 0)` : `translate3d(-100%, 0, 0)`};
   transition: transform .2s ease-out;
   width: 400px;
   z-index: 16777271;
-
-  &[active] {
-    transform: translate3d(0, 0, 0);
-  }
 
   > div {
     box-sizing: border-box;
@@ -95,7 +91,7 @@ const Status = styled.div`
 const Header = styled.div`
   padding: 50px 20px 20px;
 
-  .h1 {
+  h1 {
     font-family: sans-serif;
     font-size: 24px;
     letter-spacing: .5px;
@@ -104,7 +100,7 @@ const Header = styled.div`
     text-transform: uppercase;
   }
 
-  .h2 {
+  h2 {
     color: #ccc;
     font-family: sans-serif;
     font-size: 16px;
@@ -113,7 +109,7 @@ const Header = styled.div`
     text-transform: uppercase;
   }
 
-  .h4 {
+  h4 {
     color: #999;
     font-family: sans-serif;
     font-size: 14px;
@@ -189,28 +185,28 @@ export default class Admin extends PureComponent {
       updateReady: false,
       activationCount: 0,
       debugEnabled: false,
-      appName: remote.app.getName,
+      appName: remote.app.getName(),
       appVersion: `v${remote.app.getVersion()}`,
       ipAddress: ip.address(),
     };
   }
 
   componentDidMount() {
-    ipcRenderer.on('update-status', this.onUpdateStatusChange);
-    ipcRenderer.on('debug-enabled', this.onDebugEnabled);
+    ipcRenderer.on(`update-status`, this.onUpdateStatusChange);
+    ipcRenderer.on(`debug-enabled`, this.onDebugEnabled);
 
-    document.addEventListener('pointerup', this.onPointerUp);
-    document.addEventListener('keyup', this.onKeyUp);
+    document.addEventListener(`pointerup`, this.onPointerUp);
+    document.addEventListener(`keyup`, this.onKeyUp);
 
     this.restartIdleTimeout();
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeListener('update-status', this.onUpdateStatusChange);
-    ipcRenderer.removeListener('debug-enabled', this.onDebugEnabled);
+    ipcRenderer.removeListener(`update-status`, this.onUpdateStatusChange);
+    ipcRenderer.removeListener(`debug-enabled`, this.onDebugEnabled);
 
-    document.removeEventListener('pointerup', this.onPointerUp);
-    document.removeEventListener('keyup', this.onKeyUp);
+    document.removeEventListener(`pointerup`, this.onPointerUp);
+    document.removeEventListener(`keyup`, this.onKeyUp);
 
     clearTimeout(this.idleTimeout);
     clearTimeout(this.activationTimeout);
@@ -218,20 +214,21 @@ export default class Admin extends PureComponent {
 
   /**
    * Method invoked when the window detects a pointer up event. When this
-   * happens, restart the timeout event. Also, if the pointer is within
-   * 100px of the top left corner, initiate the activation process. When
-   * the number of occurance hits MAX_ACTIVATION_COUNT, bring out the admin
-   * panel.
+   * happens, restart the timeout event. Also, if the pointer is within 100px
+   * of the top left corner, initiate the activation process. When the number of
+   * occurance hits MAX_ACTIVATION_COUNT, bring out the admin panel.
+   *
    * @param {Event} event
    */
   onPointerUp = (event) => {
     this.restartIdleTimeout();
 
     if (event.clientX > 100 || event.clientY > 100) return this.cancelActivation();
-    this.activationCount++;
+
+    this.setState({ activationCount: this.state.activationCount + 1 });
     this.waitForActivation();
 
-    if (this.activationCount >= MAX_ACTIVATION_COUNT) {
+    if (this.state.activationCount >= MAX_ACTIVATION_COUNT) {
       this.activate();
     }
   }
@@ -254,32 +251,37 @@ export default class Admin extends PureComponent {
   onUpdateStatusChange = (event, data) => {
     switch (data.status) {
     case UPDATE_STATUS.AVAILABLE:
-      this.appStatus = `Update is available`;
+      this.setState({ appStatus: `Update is available` });
       break;
     case UPDATE_STATUS.NOT_AVAILABLE:
-      this.appStatus = `App is up-to-date`;
+      this.setState({ appStatus: `App is up-to-date` });
       break;
     case UPDATE_STATUS.CHECKING:
-      this.appStatus = `Checking for update...`;
+      this.setState({ appStatus: `Checking for update...` });
       break;
-    case UPDATE_STATUS.ERROR: {
-      this.appStatus = `${data.error}`;
+    case UPDATE_STATUS.ERROR:
+      this.setState({ appStatus: `${data.error}` });
       // eslint-disable-next-line no-console
       console.error(data.error);
       break;
-    }
     case UPDATE_STATUS.DOWNLOADING: {
       const toMB = (b) => ((b/(1024*1024)).toFixed(2));
       const progress = data.progress ? `(${Math.floor(data.progress.percent)}% of ${toMB(data.progress.total)}MB at ${toMB(data.progress.bytesPerSecond)}MB/s)` : ``;
-      this.updateReady = false;
-      this.appStatus = `Downloading...${progress}`;
+
+      this.setState({
+        updateReady: false,
+        appStatus: `Downloading...${progress}`,
+      });
+
       // eslint-disable-next-line no-console
       console.log(`Downloading...${progress}`);
       break;
     }
     case UPDATE_STATUS.DOWNLOADED:
-      this.updateReady = true;
-      this.appStatus = `Update is ready to be installed`;
+      this.setState({
+        updateReady: true,
+        appStatus: `Update is ready to be installed`,
+      });
       break;
     }
   }
@@ -291,26 +293,31 @@ export default class Admin extends PureComponent {
    * @param {boolean} isEnabled
    */
   onDebugEnabled = (event, isEnabled) => {
-    this.debugEnabled = isEnabled;
+    this.setState({ debugEnabled: isEnabled });
   }
 
   /**
-   * Initiates the activation process. Begin counting the number of clicks
-   * and ensure that consecutive clicks are within the specified time
-   * interval.
+   * Initiates the activation process. Begin counting the number of clicks and
+   * ensure that consecutive clicks are within the specified time interval.
    */
   waitForActivation = () => {
-    clearTimeout(this.activationTimeout);
-    this.activationTimeout = setTimeout(this.cancelActivation, ACTIVATION_TIMEOUT_INTERVAL);
+    clearTimeout(this.state.activationTimeout);
+
+    this.setState({
+      activationTimeout: setTimeout(this.cancelActivation, ACTIVATION_TIMEOUT_INTERVAL),
+    });
   }
 
   /**
    * Cancels the activation process altogether, resets the click count to 0.
    */
   cancelActivation = () => {
-    clearTimeout(this.activationTimeout);
-    this.activationTimeout = null;
-    this.activationCount = 0;
+    clearTimeout(this.state.activationTimeout);
+
+    this.setState({
+      activationTimeout: null,
+      activationCount: 0,
+     });
   }
 
   /**
@@ -318,19 +325,22 @@ export default class Admin extends PureComponent {
    */
   restartIdleTimeout = () => {
     if (process.env.NODE_ENV !== 'production') return;
-    clearTimeout(this.idleTimeout);
-    this.idleTimeout = setTimeout(() => {
-      ipcRenderer.send('idle');
-      clearTimeout(this.idleTimeout);
-      this.idleTimeout = null;
-    }, $config.idleTimeout);
+    clearTimeout(this.state.idleTimeout);
+
+    this.setState({
+      idleTimeout: setTimeout(() => {
+        ipcRenderer.send('idle');
+        clearTimeout(this.state.idleTimeout);
+        this.setState({ idleTimeout: null });
+      }, $config.idleTimeout),
+    });
   }
 
   /**
    * Activates the admin panel.
    */
   activate = () => {
-    this.isActive = true;
+    this.setState({ isActive: true });
     this.cancelActivation();
   }
 
@@ -338,7 +348,7 @@ export default class Admin extends PureComponent {
    * Deactivates the admin panel.
    */
   deactivate = () => {
-    this.isActive = false;
+    this.setState({ isActive: false });
   }
 
   /**
@@ -366,7 +376,7 @@ export default class Admin extends PureComponent {
    * Notifies the main process to install updates and restart.
    */
   installUpdates = () => {
-    if (this.updateReady) ipcRenderer.send('install-updates');
+    if (this.state.updateReady) ipcRenderer.send('install-updates');
   }
 
   /**
@@ -377,22 +387,22 @@ export default class Admin extends PureComponent {
   }
 
   render() {
-    const { appStatus, appVersion, debugEnabled, updateReady, appName, ipAddress } = this.state;
+    const { appStatus, appVersion, debugEnabled, updateReady, appName, ipAddress, isActive } = this.state;
 
     return (
-      <Root>
+      <Root active={isActive}>
         <Status>
           <span>{appStatus}</span>
         </Status>
         <Header>
           <h2>Admin</h2>
-          <h1>{ appName }</h1>
-          <h4>{ appVersion } / { ipAddress }</h4>
+          <h1>{appName}</h1>
+          <h4>{appVersion} / {ipAddress}</h4>
         </Header>
         <StyledSettings/>
         <Controls>
           <button onClick={this.refresh}>Refresh</button>
-          <button active={debugEnabled} onClick={this.toggleDebugMode}>Debug Mode</button>
+          <button active={debugEnabled ? `` : undefined} onClick={this.toggleDebugMode}>Debug Mode</button>
           <button onClick={this.checkForUpdates}>Check for Updates</button>
           <button onClick={this.installUpdates} disabled={!updateReady}>Install updates</button>
           <button onClick={this.deactivate}>Close Panel</button>

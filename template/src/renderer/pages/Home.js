@@ -70,6 +70,7 @@ const Root = styled.div`
     justify-content: center;
     font-family: ${props => props.theme.font};
     font-size: .7em;
+    font-weight: 600;
     height: 50px;
     text-transform: uppercase;
     letter-spacing: 2px;

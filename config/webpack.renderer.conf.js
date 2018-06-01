@@ -26,6 +26,7 @@ module.exports = function(config, paths) {
     `styled-normalize`,
     `styled-transition-group`,
     `prop-types`,
+    `open`,
     `ip`,
     `electron-store`,
     `electron-log`,

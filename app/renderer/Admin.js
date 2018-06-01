@@ -37,6 +37,8 @@ const UPDATE_STATUS = {
   ERROR: 6,
 };
 
+const PANEL_WIDTH = 300;
+
 // Instance of the Electron browser window.
 const currentWindow = remote.getCurrentWindow();
 
@@ -55,7 +57,7 @@ const Root = styled.div`
   top: 0;
   transform: ${props => props.active ? `translate3d(0, 0, 0)` : `translate3d(-100%, 0, 0)`};
   transition: transform .2s ease-out;
-  width: 380px;
+  width: ${PANEL_WIDTH}px;
   z-index: 16777271;
 
   > div {
@@ -71,7 +73,7 @@ const Status = styled.div`
   flex-direction: row;
   font-size: 13px;
   justify-content: center;
-  height: 40px;
+  height: 50px;
   letter-spacing: 1.6px;
   padding: 0 10px;
   text-align: center;
@@ -84,10 +86,13 @@ const Status = styled.div`
     color: #fff;
     font-family: monospace;
     font-weight: 600;
+    max-height: 2em;
     overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1em;
     letter-spacing: .8px;
     width: 100%;
+    white-space: pre-line;
+    word-break: break-all;
   }
 `;
 
@@ -145,7 +150,7 @@ const SettingsContainer = styled(Settings)`
 const Controls = styled.div`
   width: 100%;
   height: auto;
-  padding: 5px;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -161,8 +166,8 @@ const Controls = styled.div`
     font-weight: 100;
     letter-spacing: 2px;
     margin: 2.5px;
-    width: ${(400 - (5 * (4 + 2) + 20)) / 4}px;
-    height: ${(400 - (5 * (4 + 2) + 20)) / 4}px;
+    width: ${(PANEL_WIDTH - (5 * (3 + 2) + 20)) / 3}px;
+    height: ${(PANEL_WIDTH - (5 * (3 + 2) + 20)) / 3}px;
     hyphens: auto;
     line-height: 1.4em;
     outline: 0;
@@ -197,7 +202,7 @@ export default class Admin extends PureComponent {
     this.state = {
       activationTimeout: null,
       idleTimeout: null,
-      isActive: false,
+      isActive: true,
       appStatus: `WARNING: For devs only`,
       updateReady: false,
       activationCount: 0,

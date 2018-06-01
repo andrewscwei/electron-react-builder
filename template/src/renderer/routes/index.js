@@ -1,5 +1,6 @@
 /**
- * @file Routes config.
+ * @file Routes config. By default the routes are inferred from the `pages`
+ *       folder. Override the routes if you wish to specify your own.
  */
 
 import App from '@/App';

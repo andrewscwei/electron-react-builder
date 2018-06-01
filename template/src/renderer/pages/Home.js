@@ -1,5 +1,5 @@
 import Logo from '@/components/Logo';
-import { incrementOnce, incrementTwice } from '@/store/counter';
+import { increment, reset } from '@/store/counter';
 import { changeLocale } from '@/store/i18n';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
@@ -90,7 +90,7 @@ const Root = styled.div`
 `;
 
 const mapStateToProps = (state) => ({ locale: state.i18n.locale, t: state.i18n.messages, count: state.counter.count });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ changeLocale, incrementOnce, incrementTwice }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ changeLocale, incrementCount: increment, resetCount: reset }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Home extends PureComponent {
@@ -99,8 +99,8 @@ export default class Home extends PureComponent {
     t: PropTypes.object.isRequired,
     count: PropTypes.number.isRequired,
     changeLocale: PropTypes.func.isRequired,
-    incrementOnce: PropTypes.func.isRequired,
-    incrementTwice: PropTypes.func.isRequired,
+    incrementCount: PropTypes.func.isRequired,
+    resetCount: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -124,7 +124,7 @@ export default class Home extends PureComponent {
   }
 
   render() {
-    const { t, count, incrementOnce, incrementTwice } = this.props;
+    const { t, count, incrementCount, resetCount } = this.props;
 
     return (
       <Root innerRef={el => this.rootNode = el}>
@@ -137,8 +137,8 @@ export default class Home extends PureComponent {
         </summary>
         <nav>
           <button onClick={this.toggleLocale}>{t[`switch-lang`]}</button>
-          <button onClick={incrementOnce}>{t[`increment`]}</button>
-          <button onClick={incrementTwice}>{t[`increment-twice`]}</button>
+          <button onClick={incrementCount}>{t[`increment`]}</button>
+          <button onClick={resetCount}>{t[`reset`]}</button>
         </nav>
       </Root>
     );

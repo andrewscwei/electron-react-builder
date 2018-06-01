@@ -2,6 +2,6 @@
   "hello": "こ<em>{count}</em>にち<em>{count2}</em>, 世界！",
   "description": "このプロジェクトは<a href='https://github.com/andrewscwei/electron-react-builder'>electron-react-builder</a>によって構築されています",
   "increment": "増加",
-  "increment-twice": "増加x2",
+  "reset": "リセット",
   "switch-lang": "English"
 }

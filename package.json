@@ -14,6 +14,8 @@
     "erb": "./index.js"
   },
   "scripts": {
+    "start": "./index.js",
+    "init": "./index.js init",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -50,6 +52,7 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "ip": "^1.1.5",
+    "lodash": "^4.17.10",
     "node-loader": "^0.6.0",
     "open": "^0.0.5",
     "prop-types": "^15.6.1",

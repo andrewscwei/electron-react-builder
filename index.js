@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /* eslint no-console: 0 */
 
+const _ = require(`lodash`);
 const chalk = require(`chalk`);
 const fs = require(`fs`);
 const merge = require(`webpack-merge`);
@@ -35,7 +36,7 @@ let shouldPublish = false;
 let platform = undefined;
 
 // Target release tag.
-let releaseTag = `1.0.0`;
+let releaseTag = `v1.0.0`;
 
 // Resolve CLI command and options.
 function resolveOptions(cmd, options) {
@@ -54,13 +55,11 @@ function resolveOptions(cmd, options) {
 async function main() {
   // Resolve config.
   let config = require(`./config/app.conf`);
-  let hasConfig = false;
 
   try {
     const projectConfig = require(path.resolve(baseDir, configFile));
     config = merge.strategy({
     })(config, projectConfig);
-    hasConfig = true;
   }
   catch (err) {
     // Do nothing.
@@ -71,7 +70,7 @@ async function main() {
     base: baseDir,
     input: path.resolve(baseDir, inputDir),
     output: path.resolve(baseDir, outputDir),
-    build: path.resolve(baseDir, require(path.join(baseDir, `package.json`)).build.directories.output),
+    build: path.resolve(baseDir, _.get(require(path.join(baseDir, `package.json`)), `build.directories.output`, `build`)),
     static: path.resolve(baseDir, `static`),
   };
 
@@ -84,17 +83,17 @@ async function main() {
   }
 
   // Sanity checks.
-  if (!fs.existsSync(paths.input)) {
+  if (!fs.existsSync(paths.input) && !~[`init`, ``].indexOf(command)) {
     log.error(`Input directory ${chalk.cyan(paths.input)} does not exist`);
     process.exit(1);
   }
 
-  log.info(`${chalk.cyan(`v${chalk.cyan(version)}`)}: Using input dir ${chalk.cyan(inputDir)} and ouptut dir ${chalk.cyan(outputDir)}${hasConfig ? `` : ` with default config`}`);
+  log.info(`${chalk.cyan(`v${chalk.cyan(version)}`)}`);
 
   // Run the builder as per specified command.
   switch (command) {
   case `init`:
-    await require(`./tasks/init`);
+    await require(`./tasks/init`)();
     break;
   case `clean`:
     await require(`./tasks/clean`)(config, paths);
@@ -160,7 +159,6 @@ async function main() {
     program.help();
   }
 }
-
 program
   .version(version)
   .usage(`[options] <command>\n\n` +

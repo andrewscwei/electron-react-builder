@@ -1,0 +1,9 @@
+export default {
+  IDLE: 0,
+  CHECKING: 1,
+  AVAILABLE: 2,
+  NOT_AVAILABLE: 3,
+  DOWNLOADING: 4,
+  DOWNLOADED: 5,
+  ERROR: 6,
+};

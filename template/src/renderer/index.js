@@ -1,4 +1,4 @@
-import { getRoutes } from 'electron-react-builder/app/renderer/plugins/router';
+import routes from '@/routes';
 import * as reducers from '@/store';
 import { webFrame } from 'electron';
 import log from 'electron-log';
@@ -37,9 +37,9 @@ webFrame.setLayoutZoomLevelLimits(0, 0);
 
 if (process.env.NODE_ENV === `development`) {
   render(<Admin/>, document.getElementById(`admin`));
-  render(markup(getRoutes()), document.getElementById(`app`));
+  render(markup(routes), document.getElementById(`app`));
 }
 else {
   hydrate(<Admin/>, document.getElementById(`admin`));
-  hydrate(markup(getRoutes()), document.getElementById(`app`));
+  hydrate(markup(routes), document.getElementById(`app`));
 }

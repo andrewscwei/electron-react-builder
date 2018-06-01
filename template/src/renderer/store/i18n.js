@@ -1,4 +1,4 @@
-import { getTranslations } from 'electron-react-builder/app/renderer/plugins/i18n';
+import { getTranslations } from 'electron-react-builder/app/plugins/i18n';
 
 const translations = getTranslations();
 

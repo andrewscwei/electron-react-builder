@@ -4,9 +4,10 @@
  * @file Base initialization script for the Electron main process.
  */
 
-import { app, BrowserWindow, ipcMain } from 'electron';
-import log, { logger } from '../utils/log';
+import { BrowserWindow, app, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import UpdateStatus from '../enums/UpdateStatus';
+import log, { logger } from '../utils/log';
 
 // Set up auto-updater logger.
 autoUpdater.logger = logger;
@@ -15,17 +16,6 @@ autoUpdater.logger.transports.file.level = `info`;
 if (process.env.NODE_ENV === `development`) {
   require(`electron-debug`)();
 }
-
-// Auto-updater status enums.
-const UPDATE_STATUS = {
-  IDLE: 0,
-  CHECKING: 1,
-  AVAILABLE: 2,
-  NOT_AVAILABLE: 3,
-  DOWNLOADING: 4,
-  DOWNLOADED: 5,
-  ERROR: 6,
-};
 
 // Main browser window.
 let win = undefined;
@@ -73,7 +63,7 @@ function checkForUpdates() {
   if (win === undefined) return;
 
   if (hasUpdate) {
-    win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED });
+    win.webContents.send(`update-status`, { status: UpdateStatus.DOWNLOADED });
     clearInterval(updateInterval);
     updateInterval = undefined;
   }
@@ -93,28 +83,28 @@ export default function init(readyCallback) {
 
     // Susbscribe to autoUpdater events.
     autoUpdater.on(`checking-for-update`, () => {
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.CHECKING });
+      win.webContents.send(`update-status`, { status: UpdateStatus.CHECKING });
     });
 
     autoUpdater.on(`update-available`, () => {
       log.info(`New update found`);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.AVAILABLE });
+      win.webContents.send(`update-status`, { status: UpdateStatus.AVAILABLE });
     });
 
     autoUpdater.on(`update-not-available`, () => {
       log.info(`No update found`);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.NOT_AVAILABLE });
+      win.webContents.send(`update-status`, { status: UpdateStatus.NOT_AVAILABLE });
     });
 
     autoUpdater.on(`error`, (err) => {
       log.error(`Error fetching update`, err);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.ERROR, error: err ? (err.stack || err).toString() : `Error: Unknown` });
+      win.webContents.send(`update-status`, { status: UpdateStatus.ERROR, error: err ? (err.stack || err).toString() : `Error: Unknown` });
     });
 
     autoUpdater.on(`download-progress`, (progress) => {
       log.info(`Downlownding update...`, progress);
 
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADING, progress: progress });
+      win.webContents.send(`update-status`, { status: UpdateStatus.DOWNLOADING, progress: progress });
 
       if (updateInterval) {
         clearInterval(updateInterval);
@@ -125,7 +115,7 @@ export default function init(readyCallback) {
     autoUpdater.on(`update-downloaded`, () => {
       log.info(`New update downloaded`);
 
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED });
+      win.webContents.send(`update-status`, { status: UpdateStatus.DOWNLOADED });
       hasUpdate = true;
     });
 

@@ -17,7 +17,8 @@ import Settings from '@/Settings';
 import { ipcRenderer, remote } from 'electron';
 import ip from 'ip';
 import React, { PureComponent } from 'react';
-import styled, { injectGlobal } from 'styled-components';
+import styled from 'styled-components';
+import UpdateStatus from '../enums/UpdateStatus';
 
 // Timeout in between click intervals when activating the admin panel, in ms.
 const ACTIVATION_TIMEOUT_INTERVAL = 500;
@@ -26,17 +27,7 @@ const ACTIVATION_TIMEOUT_INTERVAL = 500;
 // admin panel.
 const MAX_ACTIVATION_COUNT = 5;
 
-// Updater status enums.
-const UPDATE_STATUS = {
-  IDLE: 0,
-  CHECKING: 1,
-  AVAILABLE: 2,
-  NOT_AVAILABLE: 3,
-  DOWNLOADING: 4,
-  DOWNLOADED: 5,
-  ERROR: 6,
-};
-
+// Width of the admin panel.
 const PANEL_WIDTH = 300;
 
 // Instance of the Electron browser window.
@@ -202,7 +193,7 @@ export default class Admin extends PureComponent {
     this.state = {
       activationTimeout: null,
       idleTimeout: null,
-      isActive: true,
+      isActive: false,
       appStatus: `WARNING: For devs only`,
       updateReady: false,
       activationCount: 0,
@@ -272,21 +263,21 @@ export default class Admin extends PureComponent {
    */
   onUpdateStatusChange = (event, data) => {
     switch (data.status) {
-    case UPDATE_STATUS.AVAILABLE:
+    case UpdateStatus.AVAILABLE:
       this.setState({ appStatus: `Update is available` });
       break;
-    case UPDATE_STATUS.NOT_AVAILABLE:
+    case UpdateStatus.NOT_AVAILABLE:
       this.setState({ appStatus: `App is up-to-date` });
       break;
-    case UPDATE_STATUS.CHECKING:
+    case UpdateStatus.CHECKING:
       this.setState({ appStatus: `Checking for update...` });
       break;
-    case UPDATE_STATUS.ERROR:
+    case UpdateStatus.ERROR:
       this.setState({ appStatus: `${data.error}` });
       // eslint-disable-next-line no-console
       console.error(data.error);
       break;
-    case UPDATE_STATUS.DOWNLOADING: {
+    case UpdateStatus.DOWNLOADING: {
       const toMB = (b) => ((b/(1024*1024)).toFixed(2));
       const progress = data.progress ? `(${Math.floor(data.progress.percent)}% of ${toMB(data.progress.total)}MB at ${toMB(data.progress.bytesPerSecond)}MB/s)` : ``;
 
@@ -299,7 +290,7 @@ export default class Admin extends PureComponent {
       console.log(`Downloading...${progress}`);
       break;
     }
-    case UPDATE_STATUS.DOWNLOADED:
+    case UpdateStatus.DOWNLOADED:
       this.setState({
         updateReady: true,
         appStatus: `Update is ready to be installed`,
@@ -339,7 +330,7 @@ export default class Admin extends PureComponent {
     this.setState({
       activationTimeout: null,
       activationCount: 0,
-     });
+    });
   }
 
   /**
@@ -425,10 +416,10 @@ export default class Admin extends PureComponent {
         </Header>
         <SettingsContainer/>
         <Controls>
-          <button onClick={this.refresh}>Reload</button>
           <button active={debugEnabled ? `` : undefined} onClick={this.toggleDebugMode}>Debug Mode</button>
           <button onClick={this.checkForUpdates}>Check Updates</button>
           <button onClick={this.installUpdates} disabled={!updateReady}>Install updates</button>
+          <button onClick={this.refresh}>Reload</button>
           <button onClick={this.deactivate}>Close Panel</button>
           <button important='true' onClick={this.quitApp}>Quit<br/>App</button>
         </Controls>

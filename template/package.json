@@ -1,6 +1,7 @@
 {
   "version": "0.1.0",
-  "name": "{{ slugify name }}",
+  "name": "{{ projectName }}",
+  "productName": "{{ productName }}",
   "description": "{{ description }}",
   "main": "./dist/electron/main.js",
   "author": "{{ author }}",
@@ -21,7 +22,7 @@
     "patch": "erb patch"
   },
   "build": {
-    "appId": "{{ slugify name }}",
+    "appId": "{{ projectName }}",
     "directories": {
       "output": "build"
     },
@@ -32,7 +33,7 @@
     ],
     "publish": [{
       "provider": "generic",
-      "url": "https://{{ slugify name }}-nuts.herokuapp.com/download/latest"
+      "url": "https://{{ projectName }}-nuts.herokuapp.com/download/latest"
     }, {
       "provider": "github",
       "private": true

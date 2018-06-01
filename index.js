@@ -93,7 +93,7 @@ async function main() {
   // Run the builder as per specified command.
   switch (command) {
   case `init`:
-    await require(`./tasks/init`)();
+    await require(`./tasks/init`)(paths);
     break;
   case `clean`:
     await require(`./tasks/clean`)(config, paths);

@@ -1,13 +1,10 @@
-<template>
-  <div>
-  </div>
-</template>
+import React, { PureComponent } from 'react';
 
-<script>
-  export default {
-
+export class Settings extends PureComponent {
+  render() {
+    return (
+      <div>
+      </div>
+    );
   }
-</script>
-
-<style scoped lang='scss'>
-</style>
+}

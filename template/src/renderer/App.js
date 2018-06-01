@@ -22,7 +22,7 @@ export default class App extends PureComponent {
 injectGlobal`
   ${normalize}
 
-  body {
+  html, body {
     background: #111;
   }
 

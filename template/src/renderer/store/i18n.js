@@ -26,7 +26,7 @@ export function changeLocale(locale) {
   return (dispatch) => {
     dispatch({
       type: I18N_LOCALE_CHANGED,
-      locale: locale,
+      locale,
     });
   };
 }

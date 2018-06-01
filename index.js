@@ -6,9 +6,9 @@ const fs = require(`fs`);
 const merge = require(`webpack-merge`);
 const log = require(`./utils/log`);
 const path = require(`path`);
-const program = require(`commander`);
 const spawn = require(`./utils/spawn`);
-const { version } = require(`./package.json`);
+const program = require(`commander`);
+const { repository, version } = require(`./package.json`);
 
 // Root path of the project.
 let baseDir = process.cwd();
@@ -76,7 +76,7 @@ async function main() {
   };
 
   // Catch unsupported commands.
-  const supportedCommands = [`clean`, `build`, `pack`, `dev`, `lint`, `patch`, `upgrade`, `` ];
+  const supportedCommands = [`init`, `clean`, `build`, `pack`, `dev`, `lint`, `patch`, `upgrade`, `` ];
 
   if (!~supportedCommands.indexOf(command)) {
     log.error(`Unrecognized command ${chalk.cyan(command)}. Try ${chalk.cyan(`electron-react-builder --help`)}`);
@@ -93,6 +93,9 @@ async function main() {
 
   // Run the builder as per specified command.
   switch (command) {
+  case `init`:
+    await require(`./tasks/init`);
+    break;
   case `clean`:
     await require(`./tasks/clean`)(config, paths);
     break;
@@ -142,11 +145,11 @@ async function main() {
     // Use Yarn if `yarn.lock` file exists.
     if (fs.existsSync(path.resolve(paths.base, `yarn.lock`))) {
       await spawn(`yarn`, [`remove`, `electron-react-builder` ], { stdio: `inherit` });
-      await spawn(`yarn`, [`add`, `git+ssh://git@github.com/andrewscwei/electron-react-builder.git#${releaseTag}`, `--dev` ], { stdio: `inherit` });
+      await spawn(`yarn`, [`add`, `git+ssh://git@${repository.url.replace(`https://`, ``)}#${releaseTag}`, `--dev` ], { stdio: `inherit` });
     }
     else {
       await spawn(`npm`, [`uninstall`, `electron-react-builder` ], { stdio: `inherit` });
-      await spawn(`npm`, [`install`, `git+ssh://git@github.com/andrewscwei/electron-react-builder.git#${releaseTag}`, `--save-dev` ], { stdio: `inherit` });
+      await spawn(`npm`, [`install`, `git+ssh://git@${repository.url.replace(`https://`, ``)}#${releaseTag}`, `--save-dev` ], { stdio: `inherit` });
     }
 
     // Patch files when done.
@@ -162,6 +165,7 @@ program
   .version(version)
   .usage(`[options] <command>\n\n` +
          `  where <command> is one of:\n` +
+         `     init:  interactively scaffold a new project built by electron-react-builder\n` +
          `    build:  builds the project in production\n` +
          `     pack:  packs the project in the specified platform\n` +
          `      dev:  runs the project on a local dev server with hot module reloading\n` +

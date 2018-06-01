@@ -5,6 +5,10 @@
   "author": "Andrew Wei <andrewscwei@gmail.com>",
   "private": true,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrewscwei/electron-react-builder.git"
+  },
   "bin": {
     "electron-react-builder": "./index.js",
     "erb": "./index.js"

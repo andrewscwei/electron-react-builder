@@ -61,9 +61,9 @@ module.exports = function(config, paths) {
           removeComments: true,
         },
       }),
-    ]
-      .concat(isProduction ? [] : [
+      ...isProduction ? [] : [
         new webpack.HotModuleReplacementPlugin(),
-      ]),
+      ],
+    ],
   });
 };

@@ -21,13 +21,14 @@ module.exports = function(config, paths) {
     externals: [
       ...Object.keys(dependencies || {}).filter(d => !whitelistedModules.includes(d)),
     ],
-    plugins: []
-      .concat(isProduction ? [
+    plugins: [
+      ...!isProduction ? [] : [
         new CopyWebpackPlugin([{
           from: path.join(paths.input, `icons`),
           to: path.join(paths.build, `icons`),
           ignore: [`.*` ],
         } ]),
-      ] : []),
+      ],
+    ],
   });
 };

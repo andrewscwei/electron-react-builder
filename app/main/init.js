@@ -73,7 +73,7 @@ function checkForUpdates() {
   if (win === undefined) return;
 
   if (hasUpdate) {
-    win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED, });
+    win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED });
     clearInterval(updateInterval);
     updateInterval = undefined;
   }
@@ -93,28 +93,28 @@ export default function init(readyCallback) {
 
     // Susbscribe to autoUpdater events.
     autoUpdater.on(`checking-for-update`, () => {
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.CHECKING, });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.CHECKING });
     });
 
     autoUpdater.on(`update-available`, () => {
       log.info(`New update found`);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.AVAILABLE, });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.AVAILABLE });
     });
 
     autoUpdater.on(`update-not-available`, () => {
       log.info(`No update found`);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.NOT_AVAILABLE, });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.NOT_AVAILABLE });
     });
 
     autoUpdater.on(`error`, (err) => {
       log.error(`Error fetching update`, err);
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.ERROR, error: err ? (err.stack || err).toString() : `Error: Unknown`, });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.ERROR, error: err ? (err.stack || err).toString() : `Error: Unknown` });
     });
 
     autoUpdater.on(`download-progress`, (progress) => {
       log.info(`Downlownding update...`, progress);
 
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADING, progress: progress, });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADING, progress: progress });
 
       if (updateInterval) {
         clearInterval(updateInterval);
@@ -125,7 +125,7 @@ export default function init(readyCallback) {
     autoUpdater.on(`update-downloaded`, () => {
       log.info(`New update downloaded`);
 
-      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED, });
+      win.webContents.send(`update-status`, { status: UPDATE_STATUS.DOWNLOADED });
       hasUpdate = true;
     });
 

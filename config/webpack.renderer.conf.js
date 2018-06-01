@@ -8,10 +8,11 @@ const merge = require(`webpack-merge`);
 const path = require(`path`);
 const webpack = require(`webpack`);
 const HtmlWebpackPlugin = require(`html-webpack-plugin`);
-const { dependencies, } = require(`../package.json`);
+const { dependencies } = require(`../package.json`);
 
 module.exports = function(config, paths) {
   const whitelistedModules = [
+    `classnames`,
     `react`,
     `react-dom`,
     `react-intl`,
@@ -48,7 +49,7 @@ module.exports = function(config, paths) {
       }, {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         use: `url-loader?limit=10000&name=fonts/[name]${isProduction ? `.[hash:6]` : ``}.[ext]`,
-      }, ],
+      } ],
     },
     plugins: [
       new HtmlWebpackPlugin({

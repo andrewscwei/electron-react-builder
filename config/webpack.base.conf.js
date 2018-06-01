@@ -38,7 +38,7 @@ module.exports = function(config, paths) {
       path: path.join(paths.output, `electron`),
     },
     resolve: {
-      extensions: [`.js`, `.jsx`, `.json`, `.node`, ],
+      extensions: [`.js`, `.jsx`, `.json`, `.node` ],
       alias: {
         '@': path.join(paths.input, process.env.BABEL_ENV),
       },
@@ -72,7 +72,7 @@ module.exports = function(config, paths) {
             ],
           },
         },
-      }, ],
+      } ],
     },
     plugins: [
       new webpack.DefinePlugin({

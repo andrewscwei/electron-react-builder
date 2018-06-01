@@ -1,7 +1,7 @@
 {
-  "hello": "Hell{num}, w{num2}rld!",
+  "hello": "Hell{count}, w{count2}rld!",
   "description": "This project is scaffolded by <em>electron-react-builder</em>",
   "increment": "Increment",
-  "increment-twice": "Increment x2",
+  "increment-twice": "Incrementx2",
   "switch-lang": "日本語"
 }

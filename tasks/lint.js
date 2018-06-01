@@ -21,6 +21,6 @@ module.exports = async function(config, paths, shouldLintFix) {
   if (shouldLintFix) args.push(`--fix`);
   args.push(paths.input);
 
-  await spawn(command, args, { stdio: `inherit`, });
+  await spawn(command, args, { stdio: `inherit` });
   log.succeed(`Linter completed successfully`);
 };

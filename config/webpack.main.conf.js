@@ -7,7 +7,7 @@ process.env.BABEL_ENV = `main`;
 const path = require(`path`);
 const merge = require(`webpack-merge`);
 const CopyWebpackPlugin = require(`copy-webpack-plugin`);
-const { dependencies, } = require(`../package.json`);
+const { dependencies } = require(`../package.json`);
 
 module.exports = function(config, paths) {
   const whitelistedModules = [
@@ -26,8 +26,8 @@ module.exports = function(config, paths) {
         new CopyWebpackPlugin([{
           from: path.join(paths.input, `icons`),
           to: path.join(paths.build, `icons`),
-          ignore: [`.*`, ],
-        }, ]),
+          ignore: [`.*` ],
+        } ]),
       ] : []),
   });
 };

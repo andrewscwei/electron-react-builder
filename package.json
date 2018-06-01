@@ -24,6 +24,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "chalk": "^2.4.1",
+    "classnames": "^2.2.5",
     "command-exists": "^1.2.6",
     "commander": "^2.15.1",
     "copy-webpack-plugin": "^4.5.1",

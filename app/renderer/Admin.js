@@ -41,9 +41,8 @@ const UPDATE_STATUS = {
 const currentWindow = remote.getCurrentWindow();
 
 const Root = styled.div`
-  background: #111;
+  background: #0e0d10;
   box-sizing: border-box;
-  color: #fff;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -56,7 +55,7 @@ const Root = styled.div`
   top: 0;
   transform: ${props => props.active ? `translate3d(0, 0, 0)` : `translate3d(-100%, 0, 0)`};
   transition: transform .2s ease-out;
-  width: 400px;
+  width: 380px;
   z-index: 16777271;
 
   > div {
@@ -67,14 +66,14 @@ const Root = styled.div`
 
 const Status = styled.div`
   align-items: center;
-  background: #7011bf;
+  background: #483eb5;
   display: flex;
   flex-direction: row;
   font-size: 13px;
   justify-content: center;
   height: 40px;
   letter-spacing: 1.6px;
-  padding: 0 20px;
+  padding: 0 10px;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
@@ -82,16 +81,51 @@ const Status = styled.div`
   word-wrap: none;
 
   span {
+    color: #fff;
+    font-family: monospace;
+    font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
+    letter-spacing: .8px;
     width: 100%;
   }
 `;
 
 const Header = styled.div`
-  padding: 50px 20px 20px;
+  padding: 30px 10px;
+
+  > aside {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: no-wrap;
+    justify-content: flex-start;
+    margin-top: 10px;
+
+    > * {
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+
+    > span {
+      align-items: center;
+      background: #483eb5;
+      border-radius: 5px;
+      color: #fff;
+      display: flex;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 600;
+      height: 20px;
+      justify-content: center;
+      letter-spacing: .5px;
+      padding: 0 8px;
+    }
+  }
 
   h1 {
+    color: #fff;
     font-family: sans-serif;
     font-size: 24px;
     letter-spacing: .5px;
@@ -99,36 +133,19 @@ const Header = styled.div`
     text-align: left;
     text-transform: uppercase;
   }
-
-  h2 {
-    color: #ccc;
-    font-family: sans-serif;
-    font-size: 16px;
-    letter-spacing: .5px;
-    margin: 0;
-    text-transform: uppercase;
-  }
-
-  h4 {
-    color: #999;
-    font-family: sans-serif;
-    font-size: 14px;
-    letter-spacing: .5px;
-    margin: 5px 0 0;
-  }
 `;
 
-const StyledSettings = styled(Settings)`
+const SettingsContainer = styled(Settings)`
   flex-grow: 1;
   height: auto;
-  padding: 20px 20px;
+  padding: 20px 10px;
   width: 100%;
 `;
 
 const Controls = styled.div`
   width: 100%;
   height: auto;
-  padding: 15px;
+  padding: 5px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -137,6 +154,7 @@ const Controls = styled.div`
     background: #000;
     border: 0;
     color: #fff;
+    cursor: pointer;
     font-family: sans-serif;
     font-size: 10px;
     font-style: normal;
@@ -163,14 +181,13 @@ const Controls = styled.div`
     }
 
     &[active] {
-      background: #fff;
-      color: #111;
+      background: #483eb5;
+    }
+
+    &[important] {
+      background: #b70b0b;
     }
   }
-`;
-
-const QuitButton = styled.button`
-  background: #b70b0b;
 `;
 
 export default class Admin extends PureComponent {
@@ -395,18 +412,20 @@ export default class Admin extends PureComponent {
           <span>{appStatus}</span>
         </Status>
         <Header>
-          <h2>Admin</h2>
           <h1>{appName}</h1>
-          <h4>{appVersion} / {ipAddress}</h4>
+          <aside>
+            <span>{appVersion}</span>
+            <span>{ipAddress}</span>
+          </aside>
         </Header>
-        <StyledSettings/>
+        <SettingsContainer/>
         <Controls>
-          <button onClick={this.refresh}>Refresh</button>
+          <button onClick={this.refresh}>Reload</button>
           <button active={debugEnabled ? `` : undefined} onClick={this.toggleDebugMode}>Debug Mode</button>
-          <button onClick={this.checkForUpdates}>Check for Updates</button>
+          <button onClick={this.checkForUpdates}>Check Updates</button>
           <button onClick={this.installUpdates} disabled={!updateReady}>Install updates</button>
           <button onClick={this.deactivate}>Close Panel</button>
-          <QuitButton onClick={this.quitApp}>Quit App</QuitButton>
+          <button important='true' onClick={this.quitApp}>Quit<br/>App</button>
         </Controls>
       </Root>
     );

@@ -1,7 +1,0 @@
-{
-  "hello": "こ{count}にち{count2}, 世界！",
-  "description": "このプロジェクトは<em>electron-react-builder</em>で作成されました",
-  "increment": "増加",
-  "increment-twice": "増加x2",
-  "switch-lang": "English"
-}

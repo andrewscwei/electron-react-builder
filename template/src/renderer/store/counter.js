@@ -1,4 +1,4 @@
-import db from '@/plugins/db';
+import db from 'electron-react-builder/app/renderer/plugins/db';
 
 const initialState = {
   count: db.get(`count`) || 0,

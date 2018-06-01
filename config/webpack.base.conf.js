@@ -24,7 +24,7 @@ module.exports = function(config, paths) {
   return {
     mode: isProduction ? `production` : `development`,
     target: `electron-${process.env.BABEL_ENV}`,
-    devtool: isProduction && (useSourceMaps ? `source-map` : false) || `#cheap-module-eval-source-map`,
+    devtool: isProduction && (useSourceMaps ? `source-map` : false) || `cheap-module-eval-source-map`,
     node: {
       __dirname: !isProduction,
       __filename: !isProduction,

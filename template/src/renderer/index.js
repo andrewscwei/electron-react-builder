@@ -1,4 +1,4 @@
-import { getRoutes } from '@/plugins/router';
+import { getRoutes } from 'electron-react-builder/app/renderer/plugins/router';
 import * as reducers from '@/store';
 import { webFrame } from 'electron';
 import log from 'electron-log';

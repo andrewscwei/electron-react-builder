@@ -23,7 +23,7 @@ injectGlobal`
   ${normalize}
 
   html, body {
-    background: #111;
+    background: #0e0d10;
   }
 
   html, body, #app {

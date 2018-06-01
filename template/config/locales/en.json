@@ -1,6 +1,6 @@
 {
-  "hello": "Hell{count}, w{count2}rld!",
-  "description": "This project is scaffolded by <em>electron-react-builder</em>",
+  "hello": "Hell<em>{count}</em>, w<em>{count2}</em>rld!",
+  "description": "This project is built by <em>electron-react-builder</em>",
   "increment": "Increment",
   "increment-twice": "Incrementx2",
   "switch-lang": "日本語"

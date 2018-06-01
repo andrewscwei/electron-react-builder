@@ -11,10 +11,10 @@ const path = require(`path`);
 module.exports = async function(config, paths) {
   const templateFilesToPatch = [
     `.circleci/config.yml`,
+    `jsconfig.json`,
   ];
 
   const rootFilesToPatch = [
-    `jsconfig.json`,
     `.eslintrc`,
     `.stylelintrc`,
     `.editorconfig`,

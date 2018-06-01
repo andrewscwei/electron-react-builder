@@ -3,8 +3,8 @@
 
 const chalk = require(`chalk`);
 const fs = require(`fs`);
-const log = require(`./utils/log`);
 const merge = require(`webpack-merge`);
+const log = require(`./utils/log`);
 const path = require(`path`);
 const program = require(`commander`);
 const spawn = require(`./utils/spawn`);

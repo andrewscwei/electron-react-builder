@@ -40,7 +40,7 @@ module.exports = {
   skipInterpolation: [`.*`, `.*/**` ],
   complete(data) {
     const destDir = path.join(process.cwd(), data.destDirName);
-    const filesToCopy = [`jsconfig.json`, `.editorconfig`, `.eslintrc`, `.stylelintrc`, `.nvmrc`, `.gitignore`, `config/app.conf.js` ];
+    const filesToCopy = [`.editorconfig`, `.eslintrc`, `.stylelintrc`, `.nvmrc`, `.gitignore`, `config/app.conf.js` ];
 
     filesToCopy.forEach(file => {
       fs.copyFileSync(path.join(__dirname, file), path.join(destDir, file));

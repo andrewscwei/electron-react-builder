@@ -9,16 +9,16 @@ const Root = styled.div`
   flex-direction: row;
   justify-content: center;
 
-  > figure {
+  & > figure {
     height: 100%;
-    margin: 0px;
+    margin: 0;
     padding: 0;
 
-    :not(:last-child) {
+    &:not(:last-child) {
       margin-right: 20px;
     }
 
-    > svg {
+    & > svg {
       height: 100%;
       width: auto;
     }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Root = styled.div`
-
+  /* Nothing to do */
 `;
 
 export default class Settings extends PureComponent {

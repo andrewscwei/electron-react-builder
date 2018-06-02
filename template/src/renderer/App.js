@@ -31,11 +31,14 @@ export default class App extends PureComponent {
 injectGlobal`
   ${normalize}
 
-  html, body {
+  html,
+  body {
     background: #0e0d10;
   }
 
-  html, body, #app {
+  html,
+  body,
+  #app {
     box-sizing: border-box;
     height: 100%;
     margin: 0;
@@ -53,13 +56,20 @@ injectGlobal`
     width: 100%;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin: 0;
     padding: 0;
     font-weight: 300;
   }
 
-  a, li, p {
+  a,
+  li,
+  p {
     font-weight: 300;
     list-style: none;
     margin: 0;
@@ -67,7 +77,8 @@ injectGlobal`
     text-decoration: none;
   }
 
-  ol, ul {
+  ol,
+  ul {
     margin: 0;
     padding: 0;
   }
@@ -78,7 +89,8 @@ injectGlobal`
     text-decoration: inherit;
   }
 
-  a, button {
+  a,
+  button {
     outline: none;
     border: none;
     background: transparent;
@@ -95,7 +107,7 @@ injectGlobal`
 
   .fade-enter.fade-enter-active {
     opacity: 1;
-    transition: all 0.3s;
+    transition: all .3s;
   }
 
   .fade-exit {
@@ -104,6 +116,6 @@ injectGlobal`
 
   .fade-exit.fade-exit-active {
     opacity: 0;
-    transition: all 0.3s;
+    transition: all .3s;
   }
 `;

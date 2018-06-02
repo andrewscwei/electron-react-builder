@@ -41,7 +41,7 @@ function createWindow() {
 
   // Load the WWW files.
   if (process.env.NODE_ENV === `development`) {
-    win.loadURL(`http://localhost:${$config.port || `9080`}`);
+    win.loadURL(`http://localhost:${$config.dev.port || `8080`}`);
     win.maximize();
   }
   else {

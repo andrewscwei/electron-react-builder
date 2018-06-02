@@ -94,7 +94,7 @@ async function main() {
   switch (command) {
   case `init`:
     try {
-      await require(`./tasks/init`)();
+      await require(`./tasks/init`)({ releaseTag });
     }
     catch (err) {
       console.log(`\n`);

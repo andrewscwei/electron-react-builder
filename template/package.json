@@ -1,11 +1,11 @@
 {
   "version": "0.1.0",
-  "name": "{{ projectName }}",
-  "productName": "{{ productName }}",
-  "description": "{{ description }}",
+  "name": "<%- projectName %>",
+  "productName": "<%- productName %>",
+  "description": "<%- description %>",
   "main": "./dist/electron/main.js",
-  "author": "{{ author }}",
-  "repository": "{{ repository }}",
+  "author": "<%- author %>",
+  "repository": "<%- repository %>",
   "private": true,
   "license": "NOLICENSE",
   "scripts": {
@@ -22,7 +22,7 @@
     "patch": "erb patch"
   },
   "build": {
-    "appId": "{{ projectName }}",
+    "appId": "<%- projectName %>",
     "directories": {
       "output": "build"
     },
@@ -33,7 +33,7 @@
     ],
     "publish": [{
       "provider": "generic",
-      "url": "https://{{ projectName }}-nuts.herokuapp.com/download/latest"
+      "url": "https://<%- projectName %>-nuts.herokuapp.com/download/latest"
     }, {
       "provider": "github",
       "private": true
@@ -49,6 +49,6 @@
     }
   },
   "devDependencies": {
-    "electron-react-builder": "git+ssh://git@github.com/andrewscwei/electron-react-builder.git#v1.0.0"
+    "electron-react-builder": "git+ssh://git@github.com/andrewscwei/electron-react-builder.git#<%- releaseTag %>"
   }
 }

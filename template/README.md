@@ -1,4 +1,4 @@
-# {{ name }}
+# <%- productName %>
 
 This project is built by [electron-react-builder](https://github.com/andrewscwei/electron-react-builder). See its [README](https://github.com/andrewscwei/electron-react-builder/blob/master/README.md) for config details.
 

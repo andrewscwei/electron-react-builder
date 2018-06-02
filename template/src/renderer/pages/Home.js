@@ -14,7 +14,7 @@ const StyledLogo = styled(Logo)`
   height: 140px;
 `;
 
-const Root = styled.div`
+const StyledRoot = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -127,7 +127,7 @@ export default class Home extends PureComponent {
     const { t, count, incrementCount, resetCount } = this.props;
 
     return (
-      <Root innerRef={el => this.rootNode = el}>
+      <StyledRoot innerRef={el => this.rootNode = el}>
         <StyledLogo/>
         <summary>
           <h1>
@@ -140,7 +140,7 @@ export default class Home extends PureComponent {
           <button onClick={incrementCount}>{t[`increment`]}</button>
           <button onClick={resetCount}>{t[`reset`]}</button>
         </nav>
-      </Root>
+      </StyledRoot>
     );
   }
 }

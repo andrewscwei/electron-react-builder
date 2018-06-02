@@ -33,7 +33,7 @@ const PANEL_WIDTH = 300;
 // Instance of the Electron browser window.
 const currentWindow = remote.getCurrentWindow();
 
-const Root = styled.div`
+const StyledRoot = styled.div`
   background: #0e0d10;
   box-sizing: border-box;
   display: flex;
@@ -57,7 +57,7 @@ const Root = styled.div`
   }
 `;
 
-const Status = styled.div`
+const StyledStatus = styled.div`
   align-items: center;
   background: #483eb5;
   display: flex;
@@ -87,7 +87,7 @@ const Status = styled.div`
   }
 `;
 
-const Header = styled.div`
+const StyledHeader = styled.div`
   padding: 30px 10px;
 
   > aside {
@@ -131,14 +131,14 @@ const Header = styled.div`
   }
 `;
 
-const SettingsContainer = styled(Settings)`
+const StyledSettings = styled(Settings)`
   flex-grow: 1;
   height: auto;
   padding: 20px 10px;
   width: 100%;
 `;
 
-const Controls = styled.div`
+const StyledControls = styled.div`
   width: 100%;
   height: auto;
   padding: 0;
@@ -403,27 +403,27 @@ export default class Admin extends PureComponent {
     const { appStatus, appVersion, debugEnabled, updateReady, appName, ipAddress, isActive } = this.state;
 
     return (
-      <Root active={isActive}>
-        <Status>
+      <StyledRoot active={isActive}>
+        <StyledStatus>
           <span>{appStatus}</span>
-        </Status>
-        <Header>
+        </StyledStatus>
+        <StyledHeader>
           <h1>{appName}</h1>
           <aside>
             <span>{appVersion}</span>
             <span>{ipAddress}</span>
           </aside>
-        </Header>
-        <SettingsContainer/>
-        <Controls>
+        </StyledHeader>
+        <StyledSettings/>
+        <StyledControls>
           <button active={debugEnabled ? `` : undefined} onClick={this.toggleDebugMode}>Debug Mode</button>
           <button onClick={this.checkForUpdates}>Check Updates</button>
           <button onClick={this.installUpdates} disabled={!updateReady}>Install updates</button>
           <button onClick={this.refresh}>Reload</button>
           <button onClick={this.deactivate}>Close Panel</button>
           <button important='true' onClick={this.quitApp}>Quit<br/>App</button>
-        </Controls>
-      </Root>
+        </StyledControls>
+      </StyledRoot>
     );
   }
 }

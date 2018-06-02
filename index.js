@@ -3,7 +3,7 @@
 
 const _ = require(`lodash`);
 const chalk = require(`chalk`);
-const fs = require(`fs`);
+const fs = require(`fs-extra`);
 const merge = require(`webpack-merge`);
 const log = require(`./utils/log`);
 const path = require(`path`);
@@ -70,9 +70,15 @@ async function main() {
     base: baseDir,
     input: path.resolve(baseDir, inputDir),
     output: path.resolve(baseDir, outputDir),
-    build: path.resolve(baseDir, _.get(require(path.join(baseDir, `package.json`)), `build.directories.output`, `build`)),
     static: path.resolve(baseDir, `static`),
   };
+
+  try {
+    paths.build = path.resolve(baseDir, _.get(require(path.join(baseDir, `package.json`)), `build.directories.output`, `build`));
+  }
+  catch (err) {
+    paths.build = path.resolve(baseDir, `build`);
+  }
 
   // Catch unsupported commands.
   const supportedCommands = [`init`, `clean`, `build`, `pack`, `dev`, `lint`, `patch`, `upgrade`, `` ];

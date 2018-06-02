@@ -104,4 +104,11 @@ module.exports = async function({ releaseTag }) {
       await fs.copyFile(file, outFile);
     }
   }
+
+  log.succeed(`Successfully scaffolded project`);
+  log.succeed(`To start:`);
+  log.succeed(`  cd ${projectName}`);
+  log.succeed(`  nvm use`);
+  log.succeed(`  yarn`);
+  log.succeed(`  npm run dev`);
 };

@@ -9,7 +9,7 @@ export default class App extends PureComponent {
     return $routes.map((route, index) => {
       const { path, component } = route;
       const Component = require(`@/pages/${component}`).default;
-      return <Route exact path={path} component={Component} key={index}/>;
+      return <Route path={path} component={Component} key={index}/>;
     });
   }
 

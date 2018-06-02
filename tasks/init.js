@@ -104,6 +104,9 @@ module.exports = async function() {
     }
   }
 
+  // Special case to handle .gitignore.
+  fs.rename(path.join(dir, `gitignore`), path.join(dir, `.gitignore`));
+
   log.succeed(`Successfully scaffolded project`);
 
   console.log(``);

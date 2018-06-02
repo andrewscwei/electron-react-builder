@@ -106,9 +106,11 @@ module.exports = async function({ releaseTag }) {
   }
 
   log.succeed(`Successfully scaffolded project`);
-  log.succeed(`To start:`);
-  log.succeed(`  cd ${projectName}`);
-  log.succeed(`  nvm use`);
-  log.succeed(`  yarn`);
-  log.succeed(`  npm run dev`);
+
+  console.log(``);
+  console.log(`Run the following to start developing:`);
+  console.log(`  cd ${projectName}`);
+  console.log(`  nvm use`);
+  console.log(`  yarn`);
+  console.log(`  npm run dev`);
 };

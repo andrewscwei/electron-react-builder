@@ -3,7 +3,7 @@
  */
 
 const path = require(`path`);
-const fs = require(`fs-extra`);
+const fs = require(`fs`);
 
 exports.getLocaleData = function(paths) {
   const locales = fs.readdirSync(path.join(paths.base, `config/locales`))

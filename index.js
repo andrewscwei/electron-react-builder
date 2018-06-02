@@ -3,7 +3,7 @@
 
 const _ = require(`lodash`);
 const chalk = require(`chalk`);
-const fs = require(`fs-extra`);
+const fs = require(`fs`);
 const merge = require(`webpack-merge`);
 const log = require(`./utils/log`);
 const path = require(`path`);

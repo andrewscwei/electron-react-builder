@@ -4,7 +4,7 @@
  */
 
 const chalk = require(`chalk`);
-const fs = require(`fs-extra`);
+const fs = require(`fs`);
 const log = require(`../utils/log`);
 const path = require(`path`);
 

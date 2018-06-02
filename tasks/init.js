@@ -72,7 +72,6 @@ module.exports = async function() {
     path.join(__dirname, `../.eslintrc`),
     path.join(__dirname, `../.stylelintrc`),
     path.join(__dirname, `../.nvmrc`),
-    path.join(__dirname, `../.gitignore`),
     path.join(__dirname, `../config/app.conf.js`),
     ...walk(path.resolve(__dirname, `../template`)),
   ];

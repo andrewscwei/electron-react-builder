@@ -8,7 +8,7 @@ const log = require(`../utils/log`);
 module.exports = async function(config, paths) {
   try {
     log.info(`Building main process...`);
-    const res = await compile(require(`../config/webpack.main.conf`)(config, paths));
+    const res = await compile(require(`../config/build.main.conf`)(config, paths));
     console.log(res);
     log.succeed(`Successfully built main process`);
   }
@@ -20,7 +20,7 @@ module.exports = async function(config, paths) {
 
   try {
     log.info(`Building renderer process...`);
-    const res = await compile(require(`../config/webpack.renderer.conf`)(config, paths));
+    const res = await compile(require(`../config/build.renderer.conf`)(config, paths));
     console.log(res);
     log.succeed(`Successfully built renderer process`);
   }

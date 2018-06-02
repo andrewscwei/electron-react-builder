@@ -1,8 +1,8 @@
-import routes from '@/routes';
 import * as reducers from '@/store';
 import { webFrame } from 'electron';
 import log from 'electron-log';
 import Admin from 'electron-react-builder/app/renderer/Admin';
+import routes from 'electron-react-builder/app/renderer/routes';
 import React from 'react';
 import { hydrate, render } from 'react-dom';
 import { IntlProvider } from 'react-intl';
@@ -11,6 +11,12 @@ import { renderRoutes } from 'react-router-config';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
+
+log.info(`RENDERER`, `Process started`);
+
+webFrame.setZoomFactor(1);
+webFrame.setVisualZoomLevelLimits(1, 1);
+webFrame.setLayoutZoomLevelLimits(0, 0);
 
 const ConnectedIntlProvider = connect((state) => ({
   locale: state.i18n.locale,
@@ -28,12 +34,6 @@ const markup = (r) => (
     </ConnectedIntlProvider>
   </Provider>
 );
-
-log.info(`RENDERER`, `Process started`);
-
-webFrame.setZoomFactor(1);
-webFrame.setVisualZoomLevelLimits(1, 1);
-webFrame.setLayoutZoomLevelLimits(0, 0);
 
 if (process.env.NODE_ENV === `development`) {
   render(<Admin/>, document.getElementById(`admin`));

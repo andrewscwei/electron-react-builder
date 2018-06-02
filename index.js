@@ -36,7 +36,7 @@ let shouldPublish = false;
 let platform = undefined;
 
 // Target release tag.
-let releaseTag = `v1.0.0`;
+let releaseTag = undefined;
 
 // Resolve CLI command and options.
 function resolveOptions(cmd, options) {
@@ -100,7 +100,7 @@ async function main() {
   switch (command) {
   case `init`:
     try {
-      await require(`./tasks/init`)({ releaseTag });
+      await require(`./tasks/init`)();
     }
     catch (err) {
       console.log(`\n`);
@@ -158,11 +158,11 @@ async function main() {
     // Use Yarn if `yarn.lock` file exists.
     if (fs.existsSync(path.resolve(paths.base, `yarn.lock`))) {
       await spawn(`yarn`, [`remove`, `electron-react-builder` ], { stdio: `inherit` });
-      await spawn(`yarn`, [`add`, `git+ssh://git@${repository.url.replace(`https://`, ``)}#${releaseTag}`, `--dev` ], { stdio: `inherit` });
+      await spawn(`yarn`, [`add`, `git+ssh://git@${repository.url.replace(`https://`, ``)}${releaseTag ? `#${releaseTag}` : ``}`, `--dev` ], { stdio: `inherit` });
     }
     else {
       await spawn(`npm`, [`uninstall`, `electron-react-builder` ], { stdio: `inherit` });
-      await spawn(`npm`, [`install`, `git+ssh://git@${repository.url.replace(`https://`, ``)}#${releaseTag}`, `--save-dev` ], { stdio: `inherit` });
+      await spawn(`npm`, [`install`, `git+ssh://git@${repository.url.replace(`https://`, ``)}${releaseTag ? `#${releaseTag}` : ``}`, `--save-dev` ], { stdio: `inherit` });
     }
 
     // Patch files when done.

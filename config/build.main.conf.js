@@ -15,7 +15,7 @@ module.exports = function(config, paths) {
     `electron-updater`,
   ];
   const isProduction = process.env.NODE_ENV === `production`;
-  const baseWebpackConfig = require(`./webpack.base.conf`)(config, paths);
+  const baseWebpackConfig = require(`./build.base.conf`)(config, paths);
 
   return merge(baseWebpackConfig, {
     externals: [

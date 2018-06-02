@@ -24,7 +24,7 @@ function walk(dir, fileList = []) {
   return fileList;
 }
 
-module.exports = async function({ releaseTag }) {
+module.exports = async function() {
   log.info(`Creating a new electron-react-builder project...`);
 
   const { projectName, productName, author, description } = await inquirer.prompt([{
@@ -93,7 +93,7 @@ module.exports = async function({ releaseTag }) {
       const t = _.template(s, {
         interpolate: /{{=([\s\S]+?)}}/g,
       });
-      const o = t({ projectName, productName, author, description, repository, releaseTag });
+      const o = t({ projectName, productName, author, description, repository });
 
       await fs.mkdirs(path.dirname(outFile));
       await fs.writeFile(outFile, o);

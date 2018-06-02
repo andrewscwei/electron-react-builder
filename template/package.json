@@ -49,6 +49,6 @@
     }
   },
   "devDependencies": {
-    "electron-react-builder": "git+ssh://git@github.com/andrewscwei/electron-react-builder.git#<%- releaseTag %>"
+    "electron-react-builder": "git+ssh://git@github.com/andrewscwei/electron-react-builder.git"
   }
 }

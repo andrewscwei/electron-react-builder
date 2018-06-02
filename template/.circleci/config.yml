@@ -19,14 +19,10 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-
       - run:
           name: Install NPM dependencies
-          command: |
-            if [ ! -f yarn.lock ]; then
-              npm install
-            else
-              yarn install
-            fi
+          command: yarn install
       - save_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:

@@ -12,8 +12,8 @@ const WebpackHotMiddleware = require(`webpack-hot-middleware`);
 const WebpackDevServer = require(`webpack-dev-server`);
 
 module.exports = async function(config, paths) {
-  const mainConfig = require(`../config/webpack.main.conf`)(config, paths);
-  const rendererConfig = require(`../config/webpack.renderer.conf`)(config, paths);
+  const mainConfig = require(`../config/build.main.conf`)(config, paths);
+  const rendererConfig = require(`../config/build.renderer.conf`)(config, paths);
 
   // Default port where dev server listens for incoming traffic.
   const port = process.env.PORT || config.dev.port;

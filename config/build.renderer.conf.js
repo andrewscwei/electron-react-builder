@@ -33,7 +33,7 @@ module.exports = function(config, paths) {
   ];
 
   const isProduction = process.env.NODE_ENV === `production`;
-  const baseWebpackConfig = require(`./webpack.base.conf`)(config, paths);
+  const baseWebpackConfig = require(`./build.base.conf`)(config, paths);
 
   return merge(baseWebpackConfig, {
     mode: isProduction ? `production` : `development`,

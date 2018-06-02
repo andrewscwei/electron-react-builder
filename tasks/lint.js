@@ -25,7 +25,7 @@ async function lintJS(config, paths, shouldLintFix) {
 async function lintCSS(config, paths, shouldLintFix) {
   let command = `stylelint`;
   let args = [
-    `"${paths.input}/**/*.js"`
+    `"${paths.input}/**/*.js"`,
   ];
 
   if (shouldLintFix) args.push(`--fix`);

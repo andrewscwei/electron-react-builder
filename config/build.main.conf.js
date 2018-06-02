@@ -13,6 +13,7 @@ module.exports = function(config, paths) {
   const whitelistedModules = [
     `electron-log`,
     `electron-updater`,
+    `fs-extra`,
   ];
   const isProduction = process.env.NODE_ENV === `production`;
   const baseWebpackConfig = require(`./build.base.conf`)(config, paths);

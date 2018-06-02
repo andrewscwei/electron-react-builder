@@ -51,6 +51,7 @@ injectGlobal`
     -webkit-text-stroke: 0;
   }
 
+  /* TransitionGroup container */
   #app > div {
     height: 100%;
     width: 100%;

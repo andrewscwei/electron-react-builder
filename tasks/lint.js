@@ -28,7 +28,8 @@ async function lintCSS(config, paths, shouldLintFix) {
     `"${paths.input}/**/*.js"`,
   ];
 
-  if (shouldLintFix) args.push(`--fix`);
+  // TODO: StyleLint is not ready for styled-components yet. Skip fix.
+  // if (shouldLintFix) args.push(`--fix`);
   args.push(paths.input);
 
   await spawn(command, args, { stdio: `inherit` });

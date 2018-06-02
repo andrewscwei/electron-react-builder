@@ -1,20 +1,29 @@
-import theme from '@/styles/theme';
-import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { renderRoutes } from 'react-router-config';
-import { ThemeProvider, injectGlobal } from 'styled-components';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { injectGlobal } from 'styled-components';
 import normalize from 'styled-normalize';
 
 export default class App extends PureComponent {
-  static propTypes = {
-    route: PropTypes.object.isRequired,
+  generateRoutes = () => {
+    return $routes.map((route, index) => {
+      const { path, component } = route;
+      const Component = require(`@/pages/${component}`).default;
+      return <Route exact path={path} component={Component} key={index}/>;
+    });
   }
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        {renderRoutes(this.props.route.routes)}
-      </ThemeProvider>
+      <Router>
+        <Route render={({ location }) => (
+          <TransitionGroup>
+            <CSSTransition key={location.key} timeout={300} classNames='fade'>
+              <Switch location={location}>{this.generateRoutes()}</Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        )}/>
+      </Router>
     );
   }
 }
@@ -37,6 +46,11 @@ injectGlobal`
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-text-stroke: 0;
+  }
+
+  #app > div {
+    height: 100%;
+    width: 100%;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -73,5 +87,23 @@ injectGlobal`
   em {
     font-style: normal;
     text-decoration: none;
+  }
+
+  .fade-enter {
+    opacity: 0;
+  }
+
+  .fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: all 0.3s;
+  }
+
+  .fade-exit {
+    opacity: 1;
+  }
+
+  .fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: all 0.3s;
   }
 `;

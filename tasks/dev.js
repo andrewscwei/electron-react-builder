@@ -98,6 +98,7 @@ module.exports = async function(config, paths) {
       const server = new WebpackDevServer(compiler, {
         contentBase: paths.base,
         quiet: true,
+        historyApiFallback: true,
         before: (app, ctx) => {
           app.use(hotMiddleware);
           ctx.middleware.waitUntilValid(function() {

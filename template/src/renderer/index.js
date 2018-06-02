@@ -1,16 +1,16 @@
+import App from '@/App';
 import * as reducers from '@/store';
+import theme from '@/styles/theme';
 import { webFrame } from 'electron';
 import log from 'electron-log';
 import Admin from 'electron-react-builder/app/renderer/Admin';
-import routes from 'electron-react-builder/app/renderer/routes';
 import React from 'react';
-import { hydrate, render } from 'react-dom';
+import { render } from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { Provider, connect } from 'react-redux';
-import { renderRoutes } from 'react-router-config';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import { ThemeProvider } from 'styled-components';
 
 log.info(`RENDERER`, `Process started`);
 
@@ -25,21 +25,18 @@ const ConnectedIntlProvider = connect((state) => ({
 
 const store = createStore(combineReducers(reducers), {}, applyMiddleware(thunk));
 
-const markup = (r) => (
-  <Provider store={store}>
-    <ConnectedIntlProvider>
-      <Router>
-        {renderRoutes(r)}
-      </Router>
-    </ConnectedIntlProvider>
-  </Provider>
+render(
+  <Admin/>,
+  document.getElementById(`admin`)
 );
 
-if (process.env.NODE_ENV === `development`) {
-  render(<Admin/>, document.getElementById(`admin`));
-  render(markup(routes), document.getElementById(`app`));
-}
-else {
-  hydrate(<Admin/>, document.getElementById(`admin`));
-  hydrate(markup(routes), document.getElementById(`app`));
-}
+render(
+  <Provider store={store}>
+    <ConnectedIntlProvider>
+      <ThemeProvider theme={theme}>
+        <App/>
+      </ThemeProvider>
+    </ConnectedIntlProvider>
+  </Provider>,
+  document.getElementById(`app`)
+);

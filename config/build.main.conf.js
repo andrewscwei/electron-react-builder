@@ -28,7 +28,7 @@ module.exports = function(config, paths) {
           from: path.join(paths.input, `icons`),
           to: path.join(paths.build, `icons`),
           ignore: [`.*` ],
-        } ]),
+        }]),
       ],
     ],
   });

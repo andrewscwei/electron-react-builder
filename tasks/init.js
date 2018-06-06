@@ -27,7 +27,17 @@ function walk(dir, fileList = []) {
 module.exports = async function() {
   log.info(`Creating a new electron-react-builder project...`);
 
-  const { projectName, productName, author, description } = await inquirer.prompt([{
+  const { productName } = await inquirer.prompt([{
+    type: `input`,
+    name: `productName`,
+    message: `Product name:`,
+    validate: (t) => {
+      if (_.isEmpty(t)) return `Product name is required`;
+      return true;
+    },
+  }]);
+
+  const { projectName, description, author } = await inquirer.prompt([{
     type: `input`,
     name: `projectName`,
     message: `Project name:`,
@@ -36,14 +46,7 @@ module.exports = async function() {
       if (_.kebabCase(t) !== t) return `Project name must be kebab-cased (i.e. hello-world)`;
       return true;
     },
-  }, {
-    type: `input`,
-    name: `productName`,
-    message: `Product name:`,
-    validate: (t) => {
-      if (_.isEmpty(t)) return `Product name is required`;
-      return true;
-    },
+    default: _.kebabCase(productName),
   }, {
     type: `input`,
     name: `description`,

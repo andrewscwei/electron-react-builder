@@ -1,32 +1,9 @@
+import theme from '@/styles/theme';
 import React, { PureComponent } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { injectGlobal } from 'styled-components';
+import { ThemeProvider, injectGlobal } from 'styled-components';
 import normalize from 'styled-normalize';
-
-export default class App extends PureComponent {
-  generateRoutes = () => {
-    return $routes.map((route, index) => {
-      const { path, component } = route;
-      const Component = require(`@/pages/${component}`).default;
-      return <Route path={path} component={Component} key={index}/>;
-    });
-  }
-
-  render() {
-    return (
-      <Router>
-        <Route render={({ location }) => (
-          <TransitionGroup>
-            <CSSTransition key={location.key} timeout={300} classNames='fade'>
-              <Switch location={location}>{this.generateRoutes()}</Switch>
-            </CSSTransition>
-          </TransitionGroup>
-        )}/>
-      </Router>
-    );
-  }
-}
 
 injectGlobal`
   ${normalize}
@@ -120,3 +97,29 @@ injectGlobal`
     transition: all .3s;
   }
 `;
+
+export default class App extends PureComponent {
+  generateRoutes = () => {
+    return $routes.map((route, index) => {
+      const { path, component } = route;
+      const Component = require(`@/pages/${component}`).default;
+      return <Route path={path} component={Component} key={index}/>;
+    });
+  }
+
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Route render={({ location }) => (
+            <TransitionGroup>
+              <CSSTransition key={location.key} timeout={300} classNames='fade'>
+                <Switch location={location}>{this.generateRoutes()}</Switch>
+              </CSSTransition>
+            </TransitionGroup>
+          )}/>
+        </Router>
+      </ThemeProvider>
+    );
+  }
+}

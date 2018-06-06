@@ -37,6 +37,9 @@ module.exports = function(config, paths) {
 
   return merge(baseWebpackConfig, {
     mode: isProduction ? `production` : `development`,
+    entry: {
+      renderer: path.join(paths.input, `renderer/index.jsx`),
+    },
     externals: [
       ...Object.keys(dependencies || {}).filter(d => !whitelistedModules.includes(d)),
     ],

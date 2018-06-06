@@ -19,6 +19,9 @@ module.exports = function(config, paths) {
   const baseWebpackConfig = require(`./build.base.conf`)(config, paths);
 
   return merge(baseWebpackConfig, {
+    entry: {
+      main: path.join(paths.input, `main/index.js`),
+    },
     externals: [
       ...Object.keys(dependencies || {}).filter(d => !whitelistedModules.includes(d)),
     ],

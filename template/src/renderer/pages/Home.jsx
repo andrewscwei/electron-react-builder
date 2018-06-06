@@ -1,6 +1,6 @@
 import Logo from '@/components/Logo';
 import { increment, reset } from '@/store/counter';
-import { changeLocale } from '@/store/i18n';
+import { changeLocale } from '@/store/intl';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -89,7 +89,7 @@ const StyledRoot = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => ({ locale: state.i18n.locale, t: state.i18n.messages, count: state.counter.count });
+const mapStateToProps = (state) => ({ locale: state.intl.locale, t: state.intl.translations, count: state.counter.count });
 const mapDispatchToProps = (dispatch) => bindActionCreators({ changeLocale, incrementCount: increment, resetCount: reset }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)

@@ -29,9 +29,6 @@ module.exports = function(config, paths) {
       __dirname: !isProduction,
       __filename: !isProduction,
     },
-    entry: {
-      [process.env.BABEL_ENV]: path.join(paths.input, `${process.env.BABEL_ENV}/index.js`),
-    },
     output: {
       filename: `[name].js`,
       libraryTarget: `commonjs2`,

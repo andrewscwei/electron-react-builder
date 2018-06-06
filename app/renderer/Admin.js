@@ -8,9 +8,9 @@
  *         3. Other useful debugging features such as refreshing the app and
  *            quitting the app
  *
- *       This component expects that the app repo has a `Settings.vue` file in
- *       `@/components`. The Settings component is automatically loaded into
- *       this admin panel. Add app-specific options in there if you wish.
+ *       This component expects that the app repo has a `Settings.jsx` file in
+ *       `@/`. The Settings component is automatically loaded into this admin
+ *       panel. Add app-specific options in there if you wish.
  */
 
 import Settings from '@/Settings';

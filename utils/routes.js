@@ -13,11 +13,11 @@ exports.parseDir = function(dir, baseDir = dir) {
   pages.forEach(filename => {
     if ((/(^|\/)\.[^/.]/g).test(filename)) return;
 
-    const basename = path.basename(filename, `.js`);
+    const basename = path.basename(filename, `.jsx`);
 
-    // Ignore files with certain names (i.e. 404.vue). No need to generate a
-    // route for these files.
-    if (~[`404` ].indexOf(basename)) return;
+    // Ignore files with certain names (i.e. NotFound.jsx). No need to generate
+    // a route for these files.
+    if (~[`NotFound`, `404`].indexOf(basename)) return;
 
     // Check if directory. If it is, crawl its contents to determine sub-routes.
     if (basename === filename) return out = out.concat(exports.parseDir(path.join(dir, basename), baseDir));
@@ -51,10 +51,10 @@ exports.generate = function(config, paths) {
   let routes = exports.parseDir(path.resolve(paths.input, `renderer`, `pages`));
 
   // Finally, add the wildcard route at the end to redirect to 404 page.
-  if (fs.existsSync(path.resolve(paths.input, `renderer`, `pages`, `404.vue`))) {
+  if (fs.existsSync(path.resolve(paths.input, `renderer`, `pages`, `NotFound.jsx`))) {
     routes.push({
       path: `*`,
-      component: `404.vue`,
+      component: `NotFound.jsx`,
     });
   }
 

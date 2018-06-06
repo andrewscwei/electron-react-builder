@@ -12,7 +12,7 @@ async function lintJS(config, paths, shouldLintFix) {
   let command = `eslint`;
   let args = [
     `-f`, path.resolve(paths.base, `node_modules/eslint-friendly-formatter`),
-    `--ext`, `.js,.vue`,
+    `--ext`, `.js,.jsx`,
     `--ignore-path`, `${path.join(paths.base, `.gitignore`)}`,
   ];
 
@@ -25,7 +25,7 @@ async function lintJS(config, paths, shouldLintFix) {
 async function lintCSS(config, paths, shouldLintFix) {
   let command = `stylelint`;
   let args = [
-    `"${paths.input}/**/*.js"`,
+    `"${paths.input}/**/*.jsx"`,
   ];
 
   // TODO: StyleLint is not ready for styled-components yet. Skip fix.

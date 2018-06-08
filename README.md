@@ -1,4 +1,4 @@
-# electron-react-builder
+# electron-react-builder [![CircleCI](https://circleci.com/gh/andrewscwei/electron-react-builder.svg?style=svg&circle-token=5ae918182ba289b2f687424d8fea46ae67a8b414)](https://circleci.com/gh/andrewscwei/electron-react-builder)
 
 > Standalone build/development pipeline for Electron with a React front-end.
 

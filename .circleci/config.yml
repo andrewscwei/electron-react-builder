@@ -27,10 +27,10 @@ jobs:
           command: cd demo && yarn
       - run:
           name: Test linter
-          command: npm run lint
+          command: cd demo && npm run lint
       - run:
           name: Test build
-          command: npm run build
+          command: cd demo && npm run build
 
 workflows:
   version: 2

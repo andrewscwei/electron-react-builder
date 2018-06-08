@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  test:
+    working_directory: ~/repo
+    docker:
+      - image: node:8.9.4
+        environment:
+          NODE_ENV: test
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-
+      - run:
+          name: Install NPM dependencies
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - "node_modules"
+      - run:
+          name: Scaffold new project
+          command: npm run init
+      - run:
+          name: Set up new project
+          command: cd demo && yarn
+      - run:
+          name: Test linter
+          command: npm run lint
+      - run:
+          name: Test build
+          command: npm run build
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test:

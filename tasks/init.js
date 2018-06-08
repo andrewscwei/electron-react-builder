@@ -27,42 +27,53 @@ function walk(dir, fileList = []) {
 module.exports = async function() {
   log.info(`Creating a new electron-react-builder project...`);
 
-  const { productName } = await inquirer.prompt([{
-    type: `input`,
-    name: `productName`,
-    message: `Product name:`,
-    validate: (t) => {
-      if (_.isEmpty(t)) return `Product name is required`;
-      return true;
-    },
-  }]);
+  let productName, projectName, description, author, repository;
 
-  const { projectName, description, author } = await inquirer.prompt([{
-    type: `input`,
-    name: `projectName`,
-    message: `Project name:`,
-    validate: (t) => {
-      if (_.isEmpty(t)) return `Project name cannot be blank`;
-      if (_.kebabCase(t) !== t) return `Project name must be kebab-cased (i.e. hello-world)`;
-      return true;
-    },
-    default: _.kebabCase(productName),
-  }, {
-    type: `input`,
-    name: `description`,
-    message: `Project description:`,
-    default: `An electron-react-builder project`,
-  }, {
-    type: `input`,
-    name: `author`,
-    message: `Author (i.e. John Doe <john@doe.com>):`,
-  }]);
+  if (process.env.NODE_ENV === `test`) {
+    productName = `Demo`;
+    projectName = _.kebabCase(productName);
+    description = `An electron-react-builder project`;
+    author = `Bot`;
+    repository = ``;
+  }
+  else {
+    ({ productName } = await inquirer.prompt([{
+      type: `input`,
+      name: `productName`,
+      message: `Product name:`,
+      validate: (t) => {
+        if (_.isEmpty(t)) return `Product name is required`;
+        return true;
+      },
+    }]));
 
-  const { repository } = await inquirer.prompt([{
-    type: `input`,
-    name: `repository`,
-    message: `Repository URL (i.e. https://github.com/<user_name>/<repo_name>.git):`,
-  }]);
+    ({ projectName, description, author } = await inquirer.prompt([{
+      type: `input`,
+      name: `projectName`,
+      message: `Project name:`,
+      validate: (t) => {
+        if (_.isEmpty(t)) return `Project name cannot be blank`;
+        if (_.kebabCase(t) !== t) return `Project name must be kebab-cased (i.e. hello-world)`;
+        return true;
+      },
+      default: _.kebabCase(productName),
+    }, {
+      type: `input`,
+      name: `description`,
+      message: `Project description:`,
+      default: `An electron-react-builder project`,
+    }, {
+      type: `input`,
+      name: `author`,
+      message: `Author (i.e. John Doe <john@doe.com>):`,
+    }]));
+
+    ({ repository } = await inquirer.prompt([{
+      type: `input`,
+      name: `repository`,
+      message: `Repository URL (i.e. https://github.com/<user_name>/<repo_name>.git):`,
+    }]));
+  }
 
   const dir = path.resolve(process.cwd(), projectName);
 

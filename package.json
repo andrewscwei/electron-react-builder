@@ -1,6 +1,6 @@
 {
   "name": "electron-react-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Electron/React app builder",
   "author": "Andrew Wei <andrewscwei@gmail.com>",
   "private": true,

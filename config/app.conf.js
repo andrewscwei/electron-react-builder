@@ -9,7 +9,7 @@ module.exports = {
   // locale file in your config.
   defaultLocale: `en`,
 
-  // Time interval to check for updates in milliseconds. Defaults to 1 minute.
+  // Time interval to check for updates in milliseconds. Defaults to 2 hours.
   checkUpdateInterval: 60 * 1000,
 
   // Time it takes for the app to be marked as idle so auto update can kick in,

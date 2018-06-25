@@ -20,6 +20,9 @@ if (process.env.NODE_ENV === `development`) {
 // Main browser window.
 let win = undefined;
 
+// Indicates whether the app is idle.
+let isIdle = false;
+
 // Indicates whether the app has a new update. This is used by the autoUpdater.
 let hasUpdate = false;
 
@@ -117,14 +120,45 @@ export default function init(readyCallback) {
 
       win.webContents.send(`update-status`, { status: UpdateStatus.DOWNLOADED });
       hasUpdate = true;
+
+      if (isIdle) {
+        log.info(`Update is available, quitting app and applying update now`);
+        autoUpdater.quitAndInstall();
+      }
     });
 
     // When app is idle and there is an update, apply it.
     ipcMain.on(`idle`, () => {
       log.info(`App is idle`);
+
+      isIdle = true;
+
       if (hasUpdate) {
         log.info(`Update is available, quitting app and applying update now`);
         autoUpdater.quitAndInstall();
+      }
+      else if (process.env.NODE_ENV === `production` && $config.checkUpdateInterval >= 0) {
+        // Check for updates constantly on production.
+        log.info(`Initiated auto-updater`);
+
+        updateInterval = setInterval(() => {
+          log.info(`Automatically checking for update...`);
+          checkForUpdates();
+        }, $config.checkUpdateInterval);
+
+        // Check for updates immediately after launch.
+        checkForUpdates();
+      }
+    });
+
+    ipcMain.on(`unidle`, () => {
+      log.info(`App is no longer idle`);
+
+      isIdle = false;
+
+      if (updateInterval) {
+        clearInterval(updateInterval);
+        updateInterval = undefined;
       }
     });
 
@@ -168,16 +202,8 @@ export default function init(readyCallback) {
       }
     });
 
-    // Check for updates constantly on production.
+    // Check for updates immediately after launch.
     if (process.env.NODE_ENV === `production` && $config.checkUpdateInterval >= 0) {
-      log.info(`Initiated auto-updater`);
-
-      updateInterval = setInterval(() => {
-        log.info(`Automatically checking for update...`);
-        checkForUpdates();
-      }, $config.checkUpdateInterval);
-
-      // Check for updates immediately after launch.
       checkForUpdates();
     }
 

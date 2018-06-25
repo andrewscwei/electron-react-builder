@@ -337,8 +337,8 @@ export default class Admin extends PureComponent {
    * Restarts the idle timeout.
    */
   restartIdleTimeout = () => {
-    if (process.env.NODE_ENV !== 'production') return;
     clearTimeout(this.state.idleTimeout);
+    ipcRenderer.send('unidle');
 
     this.setState({
       idleTimeout: setTimeout(() => {

@@ -152,9 +152,10 @@ export default function init(readyCallback) {
     });
 
     ipcMain.on(`unidle`, () => {
-      log.info(`App is no longer idle`);
-
-      isIdle = false;
+      if (isIdle) {
+        log.info(`App is no longer idle`);
+        isIdle = false;
+      }
 
       if (updateInterval) {
         clearInterval(updateInterval);

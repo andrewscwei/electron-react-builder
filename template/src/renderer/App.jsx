@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import React, { PureComponent } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ThemeProvider, injectGlobal } from 'styled-components';
 import normalize from 'styled-normalize';

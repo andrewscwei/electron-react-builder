@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build_and_deploy:
     working_directory: ~/repo
     docker:
       - image: electronuserland/builder:wine
@@ -35,3 +35,10 @@ jobs:
           command: ./node_modules/.bin/electron-react-builder pack --${BUILD_TARGET:-win} -p
       - store_artifacts:
           path: ~/repo/build
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build_and_deploy:
+          context: electron

@@ -53,7 +53,3 @@ Follow these steps to quickly set up a project built with `electron-react-builde
     4. Set **Secret** to `secret`.
     5. Select **Let me select individual events.** and only check **Release**.
 6. In your app's `package.json` file, edit the field `build.publish[0].url`. It should be `<nuts_server_url>/download/latest`. This tells the published app where to look for updates.
-
-## License
-
-This software is released under the [MIT License](http://opensource.org/licenses/MIT).
